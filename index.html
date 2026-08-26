@@ -3,2774 +3,2138 @@
 
 <head>
 
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>A Rakhi Story ❤️</title>
+<title>A Rakhi Story ❤️</title>
 
-    <style>
+<style>
 
-        /* =====================================================
-           BASIC RESET
-        ===================================================== */
+/* =====================================================
+   BASIC RESET
+===================================================== */
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        html,
-        body {
-            width: 100%;
-            height: 100%;
-        }
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
 
-        body {
+body {
+    overflow: hidden;
+    background: #02030a;
+    color: white;
+    font-family: Georgia, "Times New Roman", serif;
+}
 
-            overflow: hidden;
 
-            background: #02030a;
+/* =====================================================
+   SCENE SYSTEM
+===================================================== */
 
-            color: white;
+.scene {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100vh;
 
-            font-family:
-                Georgia,
-                "Times New Roman",
-                serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-        }
+    opacity: 0;
+    visibility: hidden;
 
+    transition:
+        opacity 1.5s ease,
+        visibility 1.5s ease;
+}
 
-        /* =====================================================
-           SCENE SYSTEM
-        ===================================================== */
+.scene.active {
+    opacity: 1;
+    visibility: visible;
+}
 
-        .scene {
 
-            position: absolute;
+/* =====================================================
+   MUSIC CONTROL
+===================================================== */
 
-            inset: 0;
+#musicControl {
+    position: fixed;
+    top: 20px;
+    right: 20px;
 
-            width: 100%;
-            height: 100vh;
+    z-index: 9999;
 
-            display: flex;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 
-            justify-content: center;
-            align-items: center;
+    padding: 8px 12px;
 
-            opacity: 0;
+    border-radius: 40px;
 
-            visibility: hidden;
+    background: rgba(0, 0, 0, 0.45);
 
-            transition:
-                opacity 1.5s ease,
-                visibility 1.5s ease;
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.2);
 
-        }
+    backdrop-filter: blur(12px);
 
-        .scene.active {
+    box-shadow:
+        0 0 25px
+        rgba(255, 120, 170, 0.15);
+}
 
-            opacity: 1;
+#musicButton {
+    width: 42px;
+    height: 42px;
 
-            visibility: visible;
+    border-radius: 50%;
 
-        }
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.35);
 
+    background:
+        rgba(255, 255, 255, 0.08);
 
-        /* =====================================================
-           MUSIC CONTROL
-        ===================================================== */
+    color: white;
 
-        #musicControl {
+    font-size: 18px;
 
-            position: fixed;
+    cursor: pointer;
 
-            top: 20px;
-            right: 20px;
+    transition: 0.3s;
+}
+
+#musicButton:hover {
+    transform: scale(1.1);
 
-            z-index: 9999;
+    background:
+        rgba(255, 255, 255, 0.18);
+
+    box-shadow:
+        0 0 20px
+        rgba(255, 130, 180, 0.5);
+}
 
-            display: flex;
+#musicInfo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
 
-            align-items: center;
+#musicStatus {
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: #eadce4;
+}
 
-            gap: 10px;
+#volumeSlider {
+    width: 70px;
+    cursor: pointer;
+}
 
-            padding: 8px 12px;
+.music-playing {
+    animation:
+        musicPulse
+        1.5s infinite
+        ease-in-out;
+}
 
-            border-radius: 40px;
+@keyframes musicPulse {
 
-            background:
-                rgba(0, 0, 0, 0.45);
+    0%,
+    100% {
+        box-shadow:
+            0 0 5px
+            rgba(255, 120, 180, 0.2);
+    }
 
-            border:
-                1px solid
-                rgba(255, 255, 255, 0.2);
+    50% {
+        box-shadow:
+            0 0 25px
+            rgba(255, 120, 180, 0.7);
+    }
+}
 
-            backdrop-filter:
-                blur(12px);
 
-            box-shadow:
-                0 0 25px
-                rgba(255, 120, 170, 0.15);
+/* =====================================================
+   SCENE 1
+===================================================== */
 
-        }
+#scene1 {
+    background:
+        radial-gradient(
+            circle at center,
+            #17112b 0%,
+            #080813 45%,
+            #02030a 80%
+        );
 
-        #musicButton {
+    overflow: hidden;
+}
 
-            width: 42px;
-            height: 42px;
+.stars {
+    position: absolute;
+    inset: 0;
+}
 
-            border-radius: 50%;
+.star {
+    position: absolute;
 
-            border:
-                1px solid
-                rgba(255, 255, 255, 0.35);
+    width: 2px;
+    height: 2px;
 
-            background:
-                rgba(255, 255, 255, 0.08);
+    background: white;
 
-            color: white;
+    border-radius: 50%;
 
-            font-size: 18px;
+    box-shadow:
+        0 0 8px white;
 
-            cursor: pointer;
+    animation:
+        twinkle
+        3s infinite
+        ease-in-out;
+}
 
-            transition:
-                0.3s;
+@keyframes twinkle {
 
-        }
+    0%,
+    100% {
+        opacity: 0.2;
+        transform: scale(1);
+    }
 
-        #musicButton:hover {
+    50% {
+        opacity: 1;
+        transform: scale(2);
+    }
+}
 
-            transform:
-                scale(1.1);
 
-            background:
-                rgba(255, 255, 255, 0.18);
+/* =====================================================
+   PARTICLES
+===================================================== */
 
-            box-shadow:
-                0 0 20px
-                rgba(255, 130, 180, 0.5);
+.particle {
+    position: absolute;
 
-        }
+    width: 4px;
+    height: 4px;
 
-        #musicInfo {
+    border-radius: 50%;
 
-            display: flex;
+    background: #ffd6e7;
 
-            align-items: center;
+    box-shadow:
+        0 0 10px #ffb6d5,
+        0 0 20px #ff7eb3;
 
-            gap: 10px;
+    animation:
+        floatParticle
+        8s linear infinite;
 
-        }
+    opacity: 0;
+}
 
-        #musicStatus {
+@keyframes floatParticle {
 
-            font-size: 11px;
+    0% {
+        transform:
+            translateY(100vh)
+            scale(0);
 
-            letter-spacing: 1px;
+        opacity: 0;
+    }
 
-            color: #eadce4;
+    20% {
+        opacity: 1;
+    }
 
-        }
+    80% {
+        opacity: 1;
+    }
 
-        #volumeSlider {
+    100% {
+        transform:
+            translateY(-20vh)
+            scale(1.5);
 
-            width: 70px;
+        opacity: 0;
+    }
+}
 
-            cursor: pointer;
 
-        }
+/* =====================================================
+   INTRO
+===================================================== */
 
-        .music-playing {
+.intro-content {
+    position: relative;
+    z-index: 10;
 
-            animation:
-                musicPulse
-                1.5s infinite
-                ease-in-out;
+    text-align: center;
 
-        }
+    padding: 30px;
 
-        @keyframes musicPulse {
+    animation:
+        introAppear
+        3s ease forwards;
+}
 
-            0%,
-            100% {
+@keyframes introAppear {
 
-                box-shadow:
-                    0 0 5px
-                    rgba(255, 120, 180, 0.2);
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
 
-            }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
-            50% {
+.small-text {
+    font-size: 15px;
 
-                box-shadow:
-                    0 0 25px
-                    rgba(255, 120, 180, 0.7);
+    letter-spacing: 6px;
 
-            }
+    text-transform: uppercase;
 
-        }
+    color: #d9cfe7;
 
+    margin-bottom: 30px;
+}
 
-        /* =====================================================
-           SCENE 1
-        ===================================================== */
+.main-text {
+    font-size:
+        clamp(
+            35px,
+            6vw,
+            70px
+        );
 
-        #scene1 {
+    line-height: 1.2;
 
-            background:
+    font-weight: 400;
 
-                radial-gradient(
-                    circle at center,
-                    #17112b 0%,
-                    #080813 45%,
-                    #02030a 80%
-                );
+    text-shadow:
+        0 0 10px
+        rgba(255, 255, 255, 0.3),
 
-            overflow: hidden;
+        0 0 30px
+        rgba(255, 120, 170, 0.3);
+}
 
-        }
+.second-text {
+    margin-top: 25px;
 
-        .stars {
+    font-size:
+        clamp(
+            18px,
+            3vw,
+            27px
+        );
 
-            position: absolute;
+    font-style: italic;
 
-            inset: 0;
+    color: #f4dce8;
+}
 
-        }
 
-        .star {
+/* =====================================================
+   BUTTONS
+===================================================== */
 
-            position: absolute;
+.start-button,
+.continue-button,
+.bond-button,
+.letter-continue {
 
-            width: 2px;
-            height: 2px;
+    padding:
+        15px 35px;
 
-            background: white;
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.4);
 
-            border-radius: 50%;
+    border-radius: 50px;
 
-            box-shadow:
-                0 0 8px white;
+    background:
+        rgba(255, 255, 255, 0.05);
 
-            animation:
-                twinkle 3s infinite ease-in-out;
+    color: white;
 
-        }
+    font-size: 14px;
 
-        @keyframes twinkle {
+    letter-spacing: 3px;
 
-            0%,
-            100% {
+    cursor: pointer;
 
-                opacity: 0.2;
+    backdrop-filter: blur(10px);
 
-                transform:
-                    scale(1);
+    transition: 0.4s;
+}
 
-            }
+.start-button {
+    margin-top: 50px;
+}
 
-            50% {
+.continue-button {
+    margin-top: 50px;
+}
 
-                opacity: 1;
+.bond-button {
+    margin-top: 35px;
+}
 
-                transform:
-                    scale(2);
+.start-button:hover,
+.continue-button:hover,
+.bond-button:hover {
 
-            }
+    transform: scale(1.08);
 
-        }
+    background:
+        rgba(255, 255, 255, 0.15);
 
+    box-shadow:
+        0 0 25px
+        rgba(255, 150, 200, 0.5);
+}
 
-        /* =====================================================
-           PARTICLES
-        ===================================================== */
 
-        .particle {
+/* =====================================================
+   VIGNETTE
+===================================================== */
 
-            position: absolute;
+.vignette {
+    position: absolute;
 
-            width: 4px;
-            height: 4px;
+    inset: 0;
 
-            border-radius: 50%;
+    pointer-events: none;
 
-            background: #ffd6e7;
+    background:
+        radial-gradient(
+            circle,
+            transparent 35%,
+            rgba(0, 0, 0, 0.75) 100%
+        );
 
-            box-shadow:
+    z-index: 5;
+}
 
-                0 0 10px #ffb6d5,
 
-                0 0 20px #ff7eb3;
+/* =====================================================
+   SCENE 2 — RAKHI
+===================================================== */
 
-            animation:
+#scene2 {
 
-                floatParticle
-                8s linear infinite;
+    background:
+        radial-gradient(
+            circle at center,
+            #261326 0%,
+            #0b0610 45%,
+            #02030a 85%
+        );
 
-            opacity: 0;
+    flex-direction: column;
 
-        }
+    text-align: center;
+}
 
-        @keyframes floatParticle {
+.rakhi-container {
 
-            0% {
+    position: relative;
 
-                transform:
-                    translateY(100vh)
-                    scale(0);
+    width: 320px;
+    height: 320px;
 
-                opacity: 0;
+    display: flex;
 
-            }
+    justify-content: center;
+    align-items: center;
 
-            20% {
+    margin-bottom: 35px;
 
-                opacity: 1;
+    animation:
+        rakhiAppear
+        2s ease forwards;
+}
 
-            }
+@keyframes rakhiAppear {
 
-            80% {
+    from {
+        opacity: 0;
 
-                opacity: 1;
+        transform:
+            scale(0.3)
+            rotate(-15deg);
+    }
 
-            }
+    to {
+        opacity: 1;
 
-            100% {
+        transform:
+            scale(1)
+            rotate(0deg);
+    }
+}
 
-                transform:
-                    translateY(-20vh)
-                    scale(1.5);
+.rakhi-glow {
 
-                opacity: 0;
+    position: absolute;
 
-            }
+    width: 240px;
+    height: 240px;
 
-        }
+    border-radius: 50%;
 
+    background:
+        rgba(255, 130, 180, 0.08);
 
-        /* =====================================================
-           INTRO
-        ===================================================== */
+    box-shadow:
 
-        .intro-content {
+        0 0 30px
+        rgba(255, 130, 180, 0.4),
 
-            position: relative;
+        0 0 70px
+        rgba(255, 100, 180, 0.3);
 
-            z-index: 10;
+    animation:
+        pulseGlow
+        3s infinite
+        ease-in-out;
+}
 
-            text-align: center;
+@keyframes pulseGlow {
 
-            padding: 30px;
+    0%,
+    100% {
+        transform: scale(0.9);
+        opacity: 0.6;
+    }
 
-            animation:
-                introAppear
-                3s ease forwards;
+    50% {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+}
 
-        }
+.thread-left,
+.thread-right {
 
-        @keyframes introAppear {
+    position: absolute;
 
-            from {
+    width: 100px;
+    height: 12px;
 
-                opacity: 0;
+    background:
+        repeating-linear-gradient(
+            45deg,
+            #d94f70 0px,
+            #d94f70 8px,
+            #ffd1dc 8px,
+            #ffd1dc 14px
+        );
 
-                transform:
-                    translateY(30px);
+    border-radius: 20px;
+}
 
-            }
+.thread-left {
 
-            to {
+    left: 15px;
 
-                opacity: 1;
+    transform: rotate(-12deg);
+}
 
-                transform:
-                    translateY(0);
+.thread-right {
 
-            }
+    right: 15px;
 
-        }
+    transform: rotate(12deg);
+}
 
-        .small-text {
+.rakhi-center {
 
-            font-size: 15px;
+    position: relative;
 
-            letter-spacing: 6px;
+    width: 145px;
+    height: 145px;
 
-            text-transform: uppercase;
+    border-radius: 50%;
 
-            color: #d9cfe7;
+    display: flex;
 
-            margin-bottom: 30px;
+    justify-content: center;
+    align-items: center;
 
-        }
+    background:
+        radial-gradient(
+            circle,
+            #fff0f5 0%,
+            #ffc1d5 20%,
+            #e85d86 45%,
+            #8f2049 70%,
+            #4a102c 100%
+        );
 
-        .main-text {
+    border:
+        8px solid #f8b7cb;
 
-            font-size:
-                clamp(
-                    35px,
-                    6vw,
-                    70px
-                );
+    box-shadow:
 
-            line-height: 1.2;
+        0 0 15px #ff9cbd,
 
-            font-weight: 400;
+        0 0 35px #ff5d98,
 
-            text-shadow:
+        0 0 70px
+        rgba(255, 70, 150, 0.5);
 
-                0 0 10px
-                rgba(
-                    255,
-                    255,
-                    255,
-                    0.3
-                ),
+    animation:
+        rotateRakhi
+        12s linear infinite;
+}
 
-                0 0 30px
-                rgba(
-                    255,
-                    120,
-                    170,
-                    0.3
-                );
+@keyframes rotateRakhi {
 
-        }
+    from {
+        transform: rotate(0deg);
+    }
 
-        .second-text {
+    to {
+        transform: rotate(360deg);
+    }
+}
 
-            margin-top: 25px;
+.rakhi-center::before {
 
-            font-size:
-                clamp(
-                    18px,
-                    3vw,
-                    27px
-                );
+    content: "✦";
 
-            font-style: italic;
+    position: absolute;
 
-            color: #f4dce8;
+    font-size: 70px;
 
-        }
+    color: #fff5f8;
 
+    text-shadow:
+        0 0 10px white,
+        0 0 25px #ff75a8;
+}
 
-        /* =====================================================
-           BUTTONS
-        ===================================================== */
+.rakhi-center::after {
 
-        .start-button,
-        .continue-button,
-        .bond-button,
-        .letter-continue {
+    content: "";
 
-            padding:
-                15px 35px;
+    position: absolute;
 
-            border:
+    width: 65px;
+    height: 65px;
 
-                1px solid
-                rgba(
-                    255,
-                    255,
-                    255,
-                    0.4
-                );
+    border:
+        3px solid
+        rgba(255, 255, 255, 0.6);
 
-            border-radius: 50px;
+    border-radius: 50%;
+}
 
-            background:
-                rgba(
-                    255,
-                    255,
-                    255,
-                    0.05
-                );
+.reveal-title {
 
-            color: white;
+    font-size:
+        clamp(
+            28px,
+            5vw,
+            55px
+        );
 
-            font-size: 14px;
+    font-weight: 400;
 
-            letter-spacing: 3px;
+    opacity: 0;
 
-            cursor: pointer;
+    animation:
+        textReveal
+        2s ease forwards;
 
-            backdrop-filter:
-                blur(10px);
+    animation-delay: 1.5s;
+}
 
-            transition:
-                0.4s;
+.reveal-subtitle {
 
-        }
+    margin-top: 18px;
 
-        .start-button {
+    font-size:
+        clamp(
+            17px,
+            2.5vw,
+            24px
+        );
 
-            margin-top: 50px;
+    color: #f5dce6;
 
-        }
+    font-style: italic;
 
-        .continue-button {
+    opacity: 0;
 
-            margin-top: 50px;
+    animation:
+        textReveal
+        2s ease forwards;
 
-        }
+    animation-delay: 3s;
+}
 
-        .bond-button {
+@keyframes textReveal {
 
-            margin-top: 35px;
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
 
-        }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
-        .start-button:hover,
-        .continue-button:hover,
-        .bond-button:hover {
 
-            transform:
-                scale(1.08);
+/* =====================================================
+   SCENE 3 — BOND
+===================================================== */
 
-            background:
-                rgba(
-                    255,
-                    255,
-                    255,
-                    0.15
-                );
+#scene3 {
 
-            box-shadow:
+    background:
+        radial-gradient(
+            circle at center,
+            #211021 0%,
+            #0c0610 45%,
+            #02030a 85%
+        );
 
-                0 0 25px
-                rgba(
-                    255,
-                    150,
-                    200,
-                    0.5
-                );
+    text-align: center;
+}
 
-        }
+.bond-glow {
 
+    position: absolute;
 
-        /* =====================================================
-           VIGNETTE
-        ===================================================== */
+    width: 450px;
+    height: 450px;
 
-        .vignette {
+    border-radius: 50%;
 
-            position: absolute;
+    background:
+        rgba(255, 70, 130, 0.08);
 
-            inset: 0;
+    box-shadow:
+        0 0 80px
+        rgba(255, 80, 150, 0.15);
 
-            pointer-events: none;
+    animation:
+        bondGlow
+        4s infinite
+        ease-in-out;
+}
 
-            background:
+@keyframes bondGlow {
 
-                radial-gradient(
-                    circle,
-                    transparent 35%,
-                    rgba(
-                        0,
-                        0,
-                        0,
-                        0.75
-                    ) 100%
-                );
+    0%,
+    100% {
+        transform: scale(0.9);
+    }
 
-            z-index: 5;
+    50% {
+        transform: scale(1.15);
+    }
+}
 
-        }
+.bond-heart {
 
+    position: absolute;
 
-        /* =====================================================
-           SCENE 2 — RAKHI
-        ===================================================== */
+    font-size: 110px;
 
-        #scene2 {
+    opacity: 0.12;
 
-            background:
+    animation:
+        heartFloat
+        5s infinite
+        ease-in-out;
+}
 
-                radial-gradient(
-                    circle at center,
-                    #261326 0%,
-                    #0b0610 45%,
-                    #02030a 85%
-                );
+@keyframes heartFloat {
 
-            flex-direction: column;
+    0%,
+    100% {
+        transform:
+            translateY(0)
+            scale(1);
+    }
 
-            text-align: center;
+    50% {
+        transform:
+            translateY(-20px)
+            scale(1.08);
+    }
+}
 
-        }
+.bond-content {
 
-        .rakhi-container {
+    position: relative;
 
-            position: relative;
+    z-index: 10;
 
-            width: 320px;
-            height: 320px;
+    width:
+        min(
+            900px,
+            90%
+        );
 
-            display: flex;
+    text-align: center;
+}
 
-            justify-content: center;
+.bond-small {
 
-            align-items: center;
+    font-size: 13px;
 
-            margin-bottom: 35px;
+    letter-spacing: 7px;
 
-            animation:
-                rakhiAppear
-                2s ease forwards;
+    color: #d8bfd0;
 
-        }
+    margin-bottom: 25px;
+}
 
-        @keyframes rakhiAppear {
+.bond-title {
 
-            from {
+    font-size:
+        clamp(
+            30px,
+            5vw,
+            55px
+        );
 
-                opacity: 0;
+    font-weight: 400;
 
-                transform:
-                    scale(0.3)
-                    rotate(-15deg);
+    line-height: 1.2;
 
-            }
+    margin-bottom: 35px;
+}
 
-            to {
+.bond-lines p {
 
-                opacity: 1;
+    font-size:
+        clamp(
+            16px,
+            2.2vw,
+            21px
+        );
 
-                transform:
-                    scale(1)
-                    rotate(0deg);
+    color: #eadbe2;
 
-            }
+    font-style: italic;
 
-        }
+    line-height: 1.7;
 
-        .rakhi-glow {
+    margin: 8px 0;
+}
 
-            position: absolute;
+.bond-lines .special-line {
 
-            width: 240px;
-            height: 240px;
+    margin-top: 22px;
 
-            border-radius: 50%;
+    font-size:
+        clamp(
+            18px,
+            2.5vw,
+            25px
+        );
 
-            background:
-                rgba(
-                    255,
-                    130,
-                    180,
-                    0.08
-                );
+    color: #ffd6e4;
 
-            box-shadow:
+    font-style: normal;
+}
 
-                0 0 30px
-                rgba(
-                    255,
-                    130,
-                    180,
-                    0.4
-                ),
 
-                0 0 70px
-                rgba(
-                    255,
-                    100,
-                    180,
-                    0.3
-                );
+/* =====================================================
+   SCENE 4 — LETTER
+===================================================== */
 
-            animation:
-                pulseGlow
-                3s infinite
-                ease-in-out;
+#scene4 {
 
-        }
+    background:
+        radial-gradient(
+            circle at center,
+            #251321 0%,
+            #0c0610 45%,
+            #02030a 90%
+        );
 
-        @keyframes pulseGlow {
+    overflow: hidden;
+}
 
-            0%,
-            100% {
+.letter-intro {
 
-                transform:
-                    scale(0.9);
+    position: absolute;
 
-                opacity: 0.6;
+    top: 8%;
 
-            }
+    font-size: 14px;
 
-            50% {
+    letter-spacing: 6px;
 
-                transform:
-                    scale(1.1);
+    color: #d8c4cf;
+}
 
-                opacity: 1;
+.envelope-area {
 
-            }
+    position: relative;
 
-        }
+    width: 340px;
+    height: 230px;
 
-        .thread-left,
-        .thread-right {
+    cursor: pointer;
 
-            position: absolute;
+    transition:
+        transform 0.5s ease;
+}
 
-            width: 100px;
+.envelope-area:hover {
 
-            height: 12px;
+    transform: scale(1.04);
+}
 
-            background:
+.envelope-glow {
 
-                repeating-linear-gradient(
-                    45deg,
-                    #d94f70 0px,
-                    #d94f70 8px,
-                    #ffd1dc 8px,
-                    #ffd1dc 14px
-                );
+    position: absolute;
 
-            border-radius: 20px;
+    width: 330px;
+    height: 180px;
 
-        }
+    left: 5px;
+    top: 25px;
 
-        .thread-left {
+    border-radius: 20px;
 
-            left: 15px;
+    background:
+        rgba(255, 100, 160, 0.08);
 
-            transform:
-                rotate(-12deg);
+    box-shadow:
+        0 0 40px
+        rgba(255, 100, 160, 0.35);
 
-        }
+    animation:
+        envelopeGlow
+        3s infinite
+        ease-in-out;
+}
 
-        .thread-right {
+@keyframes envelopeGlow {
 
-            right: 15px;
+    0%,
+    100% {
+        transform: scale(0.95);
+    }
 
-            transform:
-                rotate(12deg);
+    50% {
+        transform: scale(1.05);
+    }
+}
 
-        }
+.envelope {
 
-        .rakhi-center {
+    position: absolute;
 
-            position: relative;
+    width: 320px;
+    height: 190px;
 
-            width: 145px;
-            height: 145px;
+    left: 10px;
+    top: 40px;
 
-            border-radius: 50%;
+    background:
+        linear-gradient(
+            135deg,
+            #8d3155,
+            #52152f
+        );
 
-            display: flex;
+    border-radius: 8px;
+}
 
-            justify-content: center;
+.envelope::before {
 
-            align-items: center;
+    content: "";
 
-            background:
+    position: absolute;
 
-                radial-gradient(
-                    circle,
-                    #fff0f5 0%,
-                    #ffc1d5 20%,
-                    #e85d86 45%,
-                    #8f2049 70%,
-                    #4a102c 100%
-                );
+    left: 0;
+    bottom: 0;
 
-            border:
-                8px solid #f8b7cb;
+    border-left:
+        160px solid #a74367;
 
-            box-shadow:
+    border-top:
+        95px solid transparent;
+}
 
-                0 0 15px #ff9cbd,
+.envelope::after {
 
-                0 0 35px #ff5d98,
+    content: "";
 
-                0 0 70px
-                rgba(
-                    255,
-                    70,
-                    150,
-                    0.5
-                );
+    position: absolute;
 
-            animation:
-                rotateRakhi
-                12s linear infinite;
+    right: 0;
+    bottom: 0;
 
-        }
+    border-right:
+        160px solid #742442;
 
-        @keyframes rotateRakhi {
+    border-top:
+        95px solid transparent;
+}
 
-            from {
+.envelope-flap {
 
-                transform:
-                    rotate(0deg);
+    position: absolute;
 
-            }
+    z-index: 5;
 
-            to {
+    top: 0;
+    left: 0;
 
-                transform:
-                    rotate(360deg);
+    border-left:
+        160px solid transparent;
 
-            }
+    border-right:
+        160px solid transparent;
 
-        }
+    border-top:
+        100px solid #b64a70;
 
-        .rakhi-center::before {
+    transform-origin:
+        top center;
 
-            content: "✦";
+    transition:
+        transform 1.2s;
+}
 
-            position: absolute;
+.seal {
 
-            font-size: 70px;
+    position: absolute;
 
-            color: #fff5f8;
+    z-index: 10;
 
-            text-shadow:
-                0 0 10px white,
-                0 0 25px #ff75a8;
+    left: 50%;
+    top: 85px;
 
-        }
+    transform:
+        translateX(-50%);
 
-        .rakhi-center::after {
+    width: 48px;
+    height: 48px;
 
-            content: "";
+    border-radius: 50%;
 
-            position: absolute;
+    display: flex;
 
-            width: 65px;
-            height: 65px;
+    justify-content: center;
+    align-items: center;
 
-            border:
-                3px solid
-                rgba(
-                    255,
-                    255,
-                    255,
-                    0.6
-                );
+    background:
+        radial-gradient(
+            circle,
+            #ffd6e4,
+            #df6b91
+        );
 
-            border-radius: 50%;
+    color: #7c2347;
 
-        }
+    font-size: 22px;
 
-        .reveal-title {
+    transition:
+        opacity 0.4s;
+}
 
-            font-size:
-                clamp(
-                    28px,
-                    5vw,
-                    55px
-                );
+.open-text {
 
-            font-weight: 400;
+    position: absolute;
 
-            opacity: 0;
+    bottom: -35px;
 
-            animation:
-                textReveal
-                2s ease forwards;
+    width: 100%;
 
-            animation-delay:
-                1.5s;
+    font-size: 14px;
 
-        }
+    letter-spacing: 2px;
 
-        .reveal-subtitle {
+    color: #ead6df;
+}
 
-            margin-top: 18px;
+.envelope-area.open
+.envelope-flap {
 
-            font-size:
-                clamp(
-                    17px,
-                    2.5vw,
-                    24px
-                );
+    transform:
+        rotateX(180deg);
+}
 
-            color: #f5dce6;
+.envelope-area.open
+.seal {
 
-            font-style: italic;
+    opacity: 0;
+}
 
-            opacity: 0;
+.envelope-area.open
+.open-text {
 
-            animation:
-                textReveal
-                2s ease forwards;
+    opacity: 0;
+}
 
-            animation-delay:
-                3s;
 
-        }
+/* =====================================================
+   LETTER PAPER
+===================================================== */
 
-        @keyframes textReveal {
+.letter-paper {
 
-            from {
+    position: absolute;
 
-                opacity: 0;
+    z-index: 20;
 
-                transform:
-                    translateY(20px);
+    width:
+        min(
+            500px,
+            88vw
+        );
 
-            }
+    max-height: 75vh;
 
-            to {
+    overflow-y: auto;
 
-                opacity: 1;
+    padding:
+        45px 40px;
 
-                transform:
-                    translateY(0);
+    left: 50%;
+    top: 50%;
 
-            }
+    transform:
+        translate(-50%, 100%)
+        scale(0.7);
 
-        }
+    background:
+        linear-gradient(
+            145deg,
+            #fff9f3,
+            #f5e5d9
+        );
 
+    color: #4d2938;
 
-        /* =====================================================
-           SCENE 3 — BOND
-        ===================================================== */
+    border-radius: 5px;
 
-        #scene3 {
+    box-shadow:
+        0 25px 80px
+        rgba(0, 0, 0, 0.7);
 
-            background:
+    opacity: 0;
 
-                radial-gradient(
-                    circle at center,
-                    #211021 0%,
-                    #0c0610 45%,
-                    #02030a 85%
-                );
+    visibility: hidden;
 
-            text-align: center;
+    transition:
+        transform 1.5s,
+        opacity 1s;
+}
 
-        }
+.letter-paper.show {
 
-        .bond-glow {
+    opacity: 1;
 
-            position: absolute;
+    visibility: visible;
 
-            width: 450px;
-            height: 450px;
+    transform:
+        translate(-50%, -50%)
+        scale(1);
+}
 
-            border-radius: 50%;
+.paper-decoration {
 
-            background:
-                rgba(
-                    255,
-                    70,
-                    130,
-                    0.08
-                );
+    font-size: 30px;
 
-            box-shadow:
-                0 0 80px
-                rgba(
-                    255,
-                    80,
-                    150,
-                    0.15
-                );
+    margin-bottom: 15px;
+}
 
-            animation:
-                bondGlow
-                4s infinite
-                ease-in-out;
+.letter-title {
 
-        }
+    font-size: 32px;
 
-        @keyframes bondGlow {
+    font-weight: 400;
 
-            0%,
-            100% {
+    margin-bottom: 25px;
 
-                transform:
-                    scale(0.9);
+    color: #7e294d;
+}
 
-            }
+.letter-message {
 
-            50% {
+    font-family:
+        "Segoe UI",
+        Arial,
+        sans-serif;
 
-                transform:
-                    scale(1.15);
+    font-size: 17px;
 
-            }
+    line-height: 1.9;
 
-        }
+    text-align: left;
+}
 
-        .bond-heart {
+.letter-message p {
+    margin-bottom: 15px;
+}
 
-            position: absolute;
+.letter-signature {
 
-            font-size: 110px;
+    margin-top: 25px;
 
-            opacity: 0.12;
+    font-size: 20px;
 
-            animation:
-                heartFloat
-                5s infinite
-                ease-in-out;
+    font-style: italic;
 
-        }
+    color: #8a3152;
 
-        @keyframes heartFloat {
+    text-align: right;
+}
 
-            0%,
-            100% {
+.letter-continue {
 
-                transform:
-                    translateY(0)
-                    scale(1);
+    margin-top: 25px;
 
-            }
+    padding:
+        12px 25px;
 
-            50% {
+    background:
+        #8d3155;
 
-                transform:
-                    translateY(-20px)
-                    scale(1.08);
+    border: none;
 
-            }
+    letter-spacing: 2px;
 
-        }
+    display: none;
+}
 
-        .bond-content {
 
-            position: relative;
+/* =====================================================
+   SCENE 5 — MEMORY GALLERY
+===================================================== */
 
-            z-index: 10;
+#scene5 {
 
-            width:
-                min(
-                    900px,
-                    90%
-                );
+    background: #02030a;
 
-            text-align: center;
+    flex-direction: column;
 
-        }
+    overflow: hidden;
+}
 
-        .bond-small {
+.gallery-background {
 
-            font-size: 13px;
+    position: absolute;
 
-            letter-spacing: 7px;
+    inset: 0;
 
-            color: #d8bfd0;
+    background:
+        radial-gradient(
+            circle at center,
+            #24121e,
+            #08050a 55%,
+            #010208
+        );
+}
 
-            margin-bottom: 25px;
+.gallery-title {
 
-        }
+    position: absolute;
 
-        .bond-title {
+    top: 8%;
 
-            font-size:
-                clamp(
-                    30px,
-                    5vw,
-                    55px
-                );
+    z-index: 10;
 
-            font-weight: 400;
+    text-align: center;
+}
 
-            line-height: 1.2;
+.gallery-small {
 
-            margin-bottom: 35px;
+    font-size: 12px;
 
-        }
+    letter-spacing: 6px;
 
-        .bond-lines p {
+    color: #cdbbc5;
 
-            font-size:
-                clamp(
-                    16px,
-                    2.2vw,
-                    21px
-                );
+    margin-bottom: 15px;
+}
 
-            color: #eadbe2;
+.gallery-main {
 
-            font-style: italic;
+    font-size:
+        clamp(
+            30px,
+            5vw,
+            55px
+        );
 
-            line-height: 1.7;
+    font-weight: 400;
 
-            margin: 8px 0;
+    text-shadow:
+        0 0 20px
+        rgba(255, 120, 170, 0.4);
+}
 
-        }
 
-        .bond-lines .special-line {
+/* =====================================================
+   PHOTO STAGE
+===================================================== */
 
-            margin-top: 22px;
+.photo-stage {
 
-            font-size:
-                clamp(
-                    18px,
-                    2.5vw,
-                    25px
-                );
+    position: relative;
 
-            color: #ffd6e4;
+    z-index: 5;
 
-            font-style: normal;
+    width:
+        min(
+            650px,
+            88vw
+        );
 
-        }
+    height:
+        min(
+            65vh,
+            600px
+        );
 
+    display: flex;
 
-        /* =====================================================
-           SCENE 4 — LETTER
-        ===================================================== */
+    justify-content: center;
+    align-items: center;
+}
 
-        #scene4 {
+.memory-card {
 
-            background:
+    position: absolute;
 
-                radial-gradient(
-                    circle at center,
-                    #251321 0%,
-                    #0c0610 45%,
-                    #02030a 90%
-                );
+    width: 100%;
+    height: 100%;
 
-            overflow: hidden;
+    display: flex;
 
-        }
+    justify-content: center;
+    align-items: center;
 
-        .letter-intro {
+    opacity: 0;
 
-            position: absolute;
+    transform:
+        scale(0.92);
 
-            top: 8%;
+    transition:
+        opacity 1s ease,
+        transform 1.3s ease;
 
-            font-size: 14px;
+    pointer-events: none;
+}
 
-            letter-spacing: 6px;
+.memory-card.active {
 
-            color: #d8c4cf;
+    opacity: 1;
 
-        }
+    transform:
+        scale(1);
+}
 
-        .envelope-area {
+.memory-photo {
 
-            position: relative;
+    width: 100%;
+    height: 100%;
 
-            width: 340px;
+    object-fit: contain;
 
-            height: 230px;
+    border-radius: 12px;
 
-            cursor: pointer;
+    filter:
+        brightness(0.85);
 
-            transition:
-                transform 0.5s ease;
+    box-shadow:
 
-        }
+        0 20px 70px
+        rgba(0, 0, 0, 0.8),
 
-        .envelope-area:hover {
+        0 0 40px
+        rgba(255, 100, 160, 0.15);
 
-            transform:
-                scale(1.04);
+    animation:
+        photoZoom
+        6s ease-in-out
+        infinite alternate;
+}
 
-        }
+@keyframes photoZoom {
 
-        .envelope-glow {
+    from {
+        transform: scale(1);
+    }
 
-            position: absolute;
+    to {
+        transform: scale(1.05);
+    }
+}
 
-            width: 330px;
 
-            height: 180px;
+/* =====================================================
+   PHOTO CAPTION
+===================================================== */
 
-            left: 5px;
+.photo-caption {
 
-            top: 25px;
+    position: absolute;
 
-            border-radius: 20px;
+    bottom: 25px;
+    left: 50%;
 
-            background:
-                rgba(
-                    255,
-                    100,
-                    160,
-                    0.08
-                );
+    transform:
+        translateX(-50%);
 
-            box-shadow:
+    width: 90%;
 
-                0 0 40px
-                rgba(
-                    255,
-                    100,
-                    160,
-                    0.35
-                );
+    text-align: center;
 
-            animation:
-                envelopeGlow
-                3s infinite
-                ease-in-out;
+    padding:
+        12px 20px;
 
-        }
+    background:
+        rgba(0, 0, 0, 0.5);
 
-        @keyframes envelopeGlow {
+    border-radius: 30px;
 
-            0%,
-            100% {
+    backdrop-filter:
+        blur(8px);
 
-                transform:
-                    scale(0.95);
+    font-size: 16px;
 
-            }
+    color: #fff0f5;
 
-            50% {
+    letter-spacing: 1px;
+}
 
-                transform:
-                    scale(1.05);
 
-            }
+/* =====================================================
+   GALLERY CONTROLS
+===================================================== */
 
-        }
+.gallery-controls {
 
-        .envelope {
+    position: absolute;
 
-            position: absolute;
+    bottom: 8%;
 
-            width: 320px;
+    z-index: 20;
 
-            height: 190px;
+    display: flex;
 
-            left: 10px;
+    align-items: center;
 
-            top: 40px;
+    gap: 20px;
+}
 
-            background:
-                linear-gradient(
-                    135deg,
-                    #8d3155,
-                    #52152f
-                );
+.gallery-button {
 
-            border-radius: 8px;
+    width: 48px;
+    height: 48px;
 
-        }
+    border-radius: 50%;
 
-        .envelope::before {
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.3);
 
-            content: "";
+    background:
+        rgba(255, 255, 255, 0.06);
 
-            position: absolute;
+    color: white;
 
-            left: 0;
+    font-size: 20px;
 
-            bottom: 0;
+    cursor: pointer;
 
-            border-left:
-                160px solid
-                #a74367;
+    transition: 0.3s;
 
-            border-top:
-                95px solid
-                transparent;
+    backdrop-filter:
+        blur(8px);
+}
 
-        }
+.gallery-button:hover {
 
-        .envelope::after {
+    transform: scale(1.12);
 
-            content: "";
+    background:
+        rgba(255, 255, 255, 0.15);
+}
 
-            position: absolute;
+.photo-counter {
 
-            right: 0;
+    font-size: 13px;
 
-            bottom: 0;
+    letter-spacing: 3px;
 
-            border-right:
-                160px solid
-                #742442;
+    color: #d9cbd2;
+}
 
-            border-top:
-                95px solid
-                transparent;
 
-        }
+/* =====================================================
+   FLOATING HEARTS
+===================================================== */
 
-        .envelope-flap {
+.gallery-heart {
 
-            position: absolute;
+    position: absolute;
 
-            z-index: 5;
+    z-index: 3;
 
-            top: 0;
+    font-size: 18px;
 
-            left: 0;
+    opacity: 0;
 
-            border-left:
-                160px solid
-                transparent;
+    animation:
+        galleryHeart
+        7s linear infinite;
+}
 
-            border-right:
-                160px solid
-                transparent;
+@keyframes galleryHeart {
 
-            border-top:
-                100px solid
-                #b64a70;
+    0% {
+        transform:
+            translateY(100vh)
+            scale(0.5);
 
-            transform-origin:
-                top center;
+        opacity: 0;
+    }
 
-            transition:
-                transform 1.2s;
+    20% {
+        opacity: 0.7;
+    }
 
-        }
+    80% {
+        opacity: 0.7;
+    }
 
-        .seal {
+    100% {
+        transform:
+            translateY(-20vh)
+            scale(1.3);
 
-            position: absolute;
+        opacity: 0;
+    }
+}
 
-            z-index: 10;
 
-            left: 50%;
+/* =====================================================
+   FINAL SURPRISE
+===================================================== */
 
-            top: 85px;
+.final-scene {
 
-            transform:
-                translateX(-50%);
+    background:
+        radial-gradient(
+            circle at center,
+            #321329 0%,
+            #120812 40%,
+            #030207 85%
+        );
 
-            width: 48px;
+    overflow: hidden;
 
-            height: 48px;
+    text-align: center;
+}
 
-            border-radius: 50%;
+.final-background {
 
-            display: flex;
+    position: absolute;
 
-            justify-content: center;
+    inset: 0;
 
-            align-items: center;
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(255, 100, 160, 0.12),
+            transparent 45%
+        );
 
-            background:
-                radial-gradient(
-                    circle,
-                    #ffd6e4,
-                    #df6b91
-                );
+    animation:
+        finalBackground
+        5s infinite
+        ease-in-out;
+}
 
-            color: #7c2347;
+@keyframes finalBackground {
 
-            font-size: 22px;
+    0%,
+    100% {
+        transform: scale(0.95);
+        opacity: 0.7;
+    }
 
-            transition:
-                opacity 0.4s;
+    50% {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+}
 
-        }
 
-        .open-text {
+/* =====================================================
+   FINAL CONTENT
+===================================================== */
 
-            position: absolute;
+.final-content {
 
-            bottom: -35px;
+    position: relative;
 
-            width: 100%;
+    z-index: 20;
 
-            font-size: 14px;
+    width:
+        min(
+            900px,
+            90%
+        );
 
-            letter-spacing: 2px;
+    text-align: center;
 
-            color: #ead6df;
+    animation:
+        finalAppear
+        3s ease
+        forwards;
+}
 
-        }
+@keyframes finalAppear {
 
-        .envelope-area.open
-        .envelope-flap {
+    from {
+        opacity: 0;
 
-            transform:
-                rotateX(180deg);
+        transform:
+            translateY(40px)
+            scale(0.95);
+    }
 
-        }
+    to {
+        opacity: 1;
 
-        .envelope-area.open
-        .seal {
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
 
-            opacity: 0;
+.final-rakhi {
 
-        }
+    font-size: 65px;
 
-        .envelope-area.open
-        .open-text {
+    margin-bottom: 25px;
 
-            opacity: 0;
+    animation:
+        finalRakhi
+        3s infinite
+        ease-in-out;
 
-        }
+    filter:
+        drop-shadow(
+            0 0 20px
+            rgba(255, 120, 180, 0.8)
+        );
+}
 
+@keyframes finalRakhi {
 
-        /* =====================================================
-           LETTER PAPER
-        ===================================================== */
+    0%,
+    100% {
+        transform:
+            scale(1)
+            rotate(-5deg);
+    }
 
-        .letter-paper {
+    50% {
+        transform:
+            scale(1.15)
+            rotate(5deg);
+    }
+}
 
-            position: absolute;
+.final-small {
 
-            z-index: 20;
+    font-size: 12px;
 
-            width:
-                min(
-                    500px,
-                    88vw
-                );
+    letter-spacing: 7px;
 
-            max-height:
-                75vh;
+    color: #d8bdca;
 
-            overflow-y: auto;
+    margin-bottom: 25px;
+}
 
-            padding:
-                45px 40px;
+.final-title {
 
-            left: 50%;
+    font-size:
+        clamp(
+            30px,
+            5vw,
+            58px
+        );
 
-            top: 50%;
+    font-weight: 400;
 
-            transform:
-                translate(
-                    -50%,
-                    100%
-                )
-                scale(0.7);
+    line-height: 1.2;
 
-            background:
-                linear-gradient(
-                    145deg,
-                    #fff9f3,
-                    #f5e5d9
-                );
+    color: #fff5f8;
 
-            color: #4d2938;
+    text-shadow:
 
-            border-radius: 5px;
+        0 0 15px
+        rgba(255, 255, 255, 0.2),
 
-            box-shadow:
-                0 25px 80px
-                rgba(
-                    0,
-                    0,
-                    0,
-                    0.7
-                );
+        0 0 35px
+        rgba(255, 100, 170, 0.4);
+}
 
-            opacity: 0;
+.final-message {
 
-            visibility: hidden;
+    margin-top: 25px;
 
-            transition:
-                transform 1.5s,
-                opacity 1s;
+    font-size:
+        clamp(
+            21px,
+            3vw,
+            32px
+        );
 
-        }
+    color: #ffd9e7;
 
-        .letter-paper.show {
+    font-style: italic;
 
-            opacity: 1;
+    text-shadow:
+        0 0 20px
+        rgba(255, 100, 170, 0.5);
+}
 
-            visibility: visible;
+.final-line {
 
-            transform:
-                translate(
-                    -50%,
-                    -50%
-                )
-                scale(1);
+    width: 100px;
 
-        }
+    height: 1px;
 
-        .paper-decoration {
+    margin:
+        30px auto;
 
-            font-size: 30px;
+    background:
+        rgba(255, 200, 220, 0.5);
 
-            margin-bottom: 15px;
+    box-shadow:
+        0 0 10px
+        rgba(255, 120, 170, 0.5);
+}
 
-        }
+.final-wish {
 
-        .letter-title {
+    font-size:
+        clamp(
+            27px,
+            4vw,
+            45px
+        );
 
-            font-size: 32px;
+    color: #fff;
 
-            font-weight: 400;
+    margin-bottom: 10px;
+}
 
-            margin-bottom: 25px;
+.final-sister {
 
-            color: #7e294d;
+    font-size: 17px;
 
-        }
+    color: #dbc9d2;
 
-        .letter-message {
+    font-style: italic;
+}
 
-            font-family:
-                "Segoe UI",
-                Arial,
-                sans-serif;
+.final-signature {
 
-            font-size: 17px;
+    margin-top: 20px;
 
-            line-height: 1.9;
+    font-size: 20px;
 
-            text-align: left;
+    color: #ffd3e2;
 
-        }
+    font-style: italic;
+}
 
-        .letter-message p {
 
-            margin-bottom: 15px;
+/* =====================================================
+   REPLAY
+===================================================== */
 
-        }
+.replay-button {
 
-        .letter-signature {
+    margin-top: 35px;
 
-            margin-top: 25px;
+    padding:
+        13px 28px;
 
-            font-size: 20px;
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.3);
 
-            font-style: italic;
+    border-radius: 50px;
 
-            color: #8a3152;
+    background:
+        rgba(255, 255, 255, 0.05);
 
-            text-align: right;
+    color: white;
 
-        }
+    font-size: 12px;
 
-        .letter-continue {
+    letter-spacing: 3px;
 
-            margin-top: 25px;
+    cursor: pointer;
 
-            padding:
-                12px 25px;
+    transition: 0.4s;
 
-            background:
-                #8d3155;
+    backdrop-filter:
+        blur(10px);
+}
 
-            border: none;
+.replay-button:hover {
 
-            letter-spacing: 2px;
+    transform: scale(1.08);
 
-            display: none;
+    background:
+        rgba(255, 255, 255, 0.15);
 
-        }
+    box-shadow:
+        0 0 25px
+        rgba(255, 120, 180, 0.5);
+}
 
 
-        /* =====================================================
-           SCENE 5 — MEMORY GALLERY
-        ===================================================== */
+/* =====================================================
+   FINAL HEARTS
+===================================================== */
 
-        #scene5 {
+.final-hearts span {
 
-            background: #02030a;
+    position: absolute;
 
-            flex-direction: column;
+    bottom: -50px;
 
-            overflow: hidden;
+    font-size: 20px;
 
-        }
+    opacity: 0;
 
-        .gallery-background {
+    animation:
+        finalHeartFloat
+        9s linear
+        infinite;
+}
 
-            position: absolute;
+@keyframes finalHeartFloat {
 
-            inset: 0;
+    0% {
 
-            background:
-                radial-gradient(
-                    circle at center,
-                    #24121e,
-                    #08050a 55%,
-                    #010208
-                );
+        transform:
+            translateY(0)
+            scale(0.5)
+            rotate(0deg);
 
-        }
+        opacity: 0;
+    }
 
-        .gallery-title {
+    15% {
+        opacity: 0.7;
+    }
 
-            position: absolute;
+    80% {
+        opacity: 0.7;
+    }
 
-            top: 8%;
+    100% {
 
-            z-index: 10;
+        transform:
+            translateY(-110vh)
+            scale(1.3)
+            rotate(20deg);
 
-            text-align: center;
+        opacity: 0;
+    }
+}
 
-        }
 
-        .gallery-small {
+/* =====================================================
+   FIREWORKS
+===================================================== */
 
-            font-size: 12px;
+.firework {
 
-            letter-spacing: 6px;
+    position: absolute;
 
-            color: #cdbbc5;
+    width: 5px;
+    height: 5px;
 
-            margin-bottom: 15px;
+    border-radius: 50%;
 
-        }
+    opacity: 0;
 
-        .gallery-main {
+    animation:
+        fireworkAppear
+        4s infinite
+        ease-out;
+}
 
-            font-size:
-                clamp(
-                    30px,
-                    5vw,
-                    55px
-                );
+.firework-one {
 
-            font-weight: 400;
+    top: 25%;
+    left: 20%;
+}
 
-            text-shadow:
-                0 0 20px
-                rgba(
-                    255,
-                    120,
-                    170,
-                    0.4
-                );
+.firework-two {
 
-        }
+    top: 30%;
+    right: 20%;
 
+    animation-delay: 1.5s;
+}
 
-        /* =====================================================
-           PHOTO STAGE
-        ===================================================== */
+.firework-three {
 
-        .photo-stage {
+    top: 65%;
+    left: 75%;
 
-            position: relative;
+    animation-delay: 3s;
+}
 
-            z-index: 5;
+.firework span {
 
-            width:
-                min(
-                    650px,
-                    88vw
-                );
+    position: absolute;
 
-            height:
-                min(
-                    65vh,
-                    600px
-                );
+    left: 0;
+    top: 0;
 
-            display: flex;
+    width: 3px;
+    height: 60px;
 
-            justify-content: center;
+    transform-origin:
+        center bottom;
 
-            align-items: center;
+    border-radius: 5px;
 
-        }
+    background:
+        rgba(255, 190, 220, 0.8);
 
-        .memory-card {
+    box-shadow:
+        0 0 10px
+        rgba(255, 100, 180, 0.8);
+}
 
-            position: absolute;
+.firework span:nth-child(1) {
+    transform:
+        rotate(0deg)
+        translateY(-35px);
+}
 
-            width: 100%;
+.firework span:nth-child(2) {
+    transform:
+        rotate(45deg)
+        translateY(-35px);
+}
 
-            height: 100%;
+.firework span:nth-child(3) {
+    transform:
+        rotate(90deg)
+        translateY(-35px);
+}
 
-            display: flex;
+.firework span:nth-child(4) {
+    transform:
+        rotate(135deg)
+        translateY(-35px);
+}
 
-            justify-content: center;
+.firework span:nth-child(5) {
+    transform:
+        rotate(180deg)
+        translateY(-35px);
+}
 
-            align-items: center;
+.firework span:nth-child(6) {
+    transform:
+        rotate(225deg)
+        translateY(-35px);
+}
 
-            opacity: 0;
+.firework span:nth-child(7) {
+    transform:
+        rotate(270deg)
+        translateY(-35px);
+}
 
-            transform:
-                scale(0.92);
+.firework span:nth-child(8) {
+    transform:
+        rotate(315deg)
+        translateY(-35px);
+}
 
-            transition:
-                opacity 1s ease,
-                transform 1.3s ease;
+@keyframes fireworkAppear {
 
-            pointer-events: none;
+    0% {
+        transform: scale(0.1);
+        opacity: 0;
+    }
 
-        }
+    15% {
+        opacity: 1;
+        transform: scale(0.5);
+    }
 
-        .memory-card.active {
+    45% {
+        opacity: 0.9;
+        transform: scale(1);
+    }
 
-            opacity: 1;
+    70% {
+        opacity: 0.4;
+    }
 
-            transform:
-                scale(1);
+    100% {
+        opacity: 0;
+        transform: scale(1.3);
+    }
+}
 
-        }
 
-        .memory-photo {
+/* =====================================================
+   MOBILE
+===================================================== */
 
-            width: 100%;
+@media (max-width: 600px) {
 
-            height: 100%;
+    .small-text {
+        font-size: 11px;
+        letter-spacing: 3px;
+    }
 
-            object-fit: contain;
+    .main-text {
+        font-size: 35px;
+    }
 
-            border-radius: 12px;
+    .rakhi-container {
+        transform: scale(0.8);
+        margin-bottom: 10px;
+    }
 
-            filter:
-                brightness(0.85);
+    .bond-title {
+        font-size: 30px;
+    }
 
-            box-shadow:
+    .bond-lines p {
+        font-size: 16px;
+    }
 
-                0 20px 70px
-                rgba(
-                    0,
-                    0,
-                    0,
-                    0.8
-                ),
+    .envelope-area {
+        transform: scale(0.8);
+    }
 
-                0 0 40px
-                rgba(
-                    255,
-                    100,
-                    160,
-                    0.15
-                );
+    .letter-paper {
+        padding:
+            30px 25px;
 
-            animation:
-                photoZoom
-                6s ease-in-out
-                infinite alternate;
+        max-height: 80vh;
+    }
 
-        }
+    .letter-title {
+        font-size: 27px;
+    }
 
-        @keyframes photoZoom {
+    .letter-message {
+        font-size: 15px;
+    }
 
-            from {
+    .gallery-main {
+        font-size: 30px;
+    }
 
-                transform:
-                    scale(1);
+    .photo-stage {
+        width: 90vw;
+        height: 55vh;
+    }
 
-            }
+    .photo-caption {
+        font-size: 14px;
+        bottom: 15px;
+    }
 
-            to {
+    #musicControl {
+        top: 12px;
+        right: 12px;
+        padding: 6px;
+    }
 
-                transform:
-                    scale(1.05);
+    #musicInfo {
+        display: none;
+    }
 
-            }
+    #musicButton {
+        width: 40px;
+        height: 40px;
+    }
 
-        }
+    .final-content {
+        width: 90%;
+    }
 
+    .final-rakhi {
+        font-size: 50px;
+    }
 
-        /* =====================================================
-           PHOTO CAPTION
-        ===================================================== */
+    .final-small {
+        font-size: 9px;
+        letter-spacing: 4px;
+    }
 
-        .photo-caption {
+    .final-title {
+        font-size: 30px;
+    }
 
-            position: absolute;
+    .final-message {
+        font-size: 20px;
+    }
 
-            bottom: 25px;
+    .final-wish {
+        font-size: 29px;
+    }
 
-            left: 50%;
+    .final-sister {
+        font-size: 15px;
+    }
 
-            transform:
-                translateX(-50%);
+    .final-signature {
+        font-size: 18px;
+    }
+}
 
-            width: 90%;
-
-            text-align: center;
-
-            padding:
-                12px 20px;
-
-            background:
-                rgba(
-                    0,
-                    0,
-                    0,
-                    0.5
-                );
-
-            border-radius: 30px;
-
-            backdrop-filter:
-                blur(8px);
-
-            font-size: 16px;
-
-            color: #fff0f5;
-
-            letter-spacing: 1px;
-
-        }
-
-
-        /* =====================================================
-           GALLERY CONTROLS
-        ===================================================== */
-
-        .gallery-controls {
-
-            position: absolute;
-
-            bottom: 8%;
-
-            z-index: 20;
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 20px;
-
-        }
-
-        .gallery-button {
-
-            width: 48px;
-
-            height: 48px;
-
-            border-radius: 50%;
-
-            border:
-                1px solid
-                rgba(
-                    255,
-                    255,
-                    255,
-                    0.3
-                );
-
-            background:
-                rgba(
-                    255,
-                    255,
-                    255,
-                    0.06
-                );
-
-            color: white;
-
-            font-size: 20px;
-
-            cursor: pointer;
-
-            transition:
-                0.3s;
-
-            backdrop-filter:
-                blur(8px);
-
-        }
-
-        .gallery-button:hover {
-
-            transform:
-                scale(1.12);
-
-            background:
-                rgba(
-                    255,
-                    255,
-                    255,
-                    0.15
-                );
-
-        }
-
-        .photo-counter {
-
-            font-size: 13px;
-
-            letter-spacing: 3px;
-
-            color: #d9cbd2;
-
-        }
-
-
-        /* =====================================================
-           FLOATING HEARTS
-        ===================================================== */
-
-        .gallery-heart {
-
-            position: absolute;
-
-            z-index: 3;
-
-            font-size: 18px;
-
-            opacity: 0;
-
-            animation:
-                galleryHeart
-                7s linear infinite;
-
-        }
-
-        @keyframes galleryHeart {
-
-            0% {
-
-                transform:
-                    translateY(100vh)
-                    scale(0.5);
-
-                opacity: 0;
-
-            }
-
-            20% {
-
-                opacity: 0.7;
-
-            }
-
-            80% {
-
-                opacity: 0.7;
-
-            }
-
-            100% {
-
-                transform:
-                    translateY(-20vh)
-                    scale(1.3);
-
-                opacity: 0;
-
-            }
-
-        }
-
-
-        /* =====================================================
-           SCENE 6 — FINAL SURPRISE
-        ===================================================== */
-
-        .final-scene {
-
-            background:
-
-                radial-gradient(
-                    circle at center,
-                    #321329 0%,
-                    #120812 40%,
-                    #030207 85%
-                );
-
-            overflow: hidden;
-
-            text-align: center;
-
-        }
-
-        .final-background {
-
-            position: absolute;
-
-            inset: 0;
-
-            background:
-
-                radial-gradient(
-                    circle at center,
-                    rgba(
-                        255,
-                        100,
-                        160,
-                        0.12
-                    ),
-                    transparent 45%
-                );
-
-            animation:
-
-                finalBackground
-                5s infinite
-                ease-in-out;
-
-        }
-
-        @keyframes finalBackground {
-
-            0%,
-            100% {
-
-                transform:
-                    scale(0.95);
-
-                opacity: 0.7;
-
-            }
-
-            50% {
-
-                transform:
-                    scale(1.1);
-
-                opacity: 1;
-
-            }
-
-        }
-
-
-        /* =====================================================
-           FINAL CONTENT
-        ===================================================== */
-
-        .final-content {
-
-            position: relative;
-
-            z-index: 20;
-
-            width:
-                min(
-                    900px,
-                    90%
-                );
-
-            text-align: center;
-
-            animation:
-
-                finalAppear
-                3s ease
-                forwards;
-
-        }
-
-        @keyframes finalAppear {
-
-            from {
-
-                opacity: 0;
-
-                transform:
-                    translateY(40px)
-                    scale(0.95);
-
-            }
-
-            to {
-
-                opacity: 1;
-
-                transform:
-                    translateY(0)
-                    scale(1);
-
-            }
-
-        }
-
-
-        /* =====================================================
-           FINAL RAKHI
-        ===================================================== */
-
-        .final-rakhi {
-
-            font-size: 65px;
-
-            margin-bottom: 25px;
-
-            animation:
-
-                finalRakhi
-                3s infinite
-                ease-in-out;
-
-            filter:
-
-                drop-shadow(
-                    0 0 20px
-                    rgba(
-                        255,
-                        120,
-                        180,
-                        0.8
-                    )
-                );
-
-        }
-
-        @keyframes finalRakhi {
-
-            0%,
-            100% {
-
-                transform:
-                    scale(1)
-                    rotate(-5deg);
-
-            }
-
-            50% {
-
-                transform:
-                    scale(1.15)
-                    rotate(5deg);
-
-            }
-
-        }
-
-
-        /* =====================================================
-           FINAL TEXT
-        ===================================================== */
-
-        .final-small {
-
-            font-size: 12px;
-
-            letter-spacing: 7px;
-
-            color: #d8bdca;
-
-            margin-bottom: 25px;
-
-        }
-
-        .final-title {
-
-            font-size:
-                clamp(
-                    30px,
-                    5vw,
-                    58px
-                );
-
-            font-weight: 400;
-
-            line-height: 1.2;
-
-            color: #fff5f8;
-
-            text-shadow:
-
-                0 0 15px
-                rgba(
-                    255,
-                    255,
-                    255,
-                    0.2
-                ),
-
-                0 0 35px
-                rgba(
-                    255,
-                    100,
-                    170,
-                    0.4
-                );
-
-        }
-
-        .final-message {
-
-            margin-top: 25px;
-
-            font-size:
-                clamp(
-                    21px,
-                    3vw,
-                    32px
-                );
-
-            color: #ffd9e7;
-
-            font-style: italic;
-
-            text-shadow:
-
-                0 0 20px
-                rgba(
-                    255,
-                    100,
-                    170,
-                    0.5
-                );
-
-        }
-
-        .final-line {
-
-            width: 100px;
-
-            height: 1px;
-
-            margin:
-                30px auto;
-
-            background:
-
-                rgba(
-                    255,
-                    200,
-                    220,
-                    0.5
-                );
-
-            box-shadow:
-
-                0 0 10px
-                rgba(
-                    255,
-                    120,
-                    170,
-                    0.5
-                );
-
-        }
-
-        .final-wish {
-
-            font-size:
-                clamp(
-                    27px,
-                    4vw,
-                    45px
-                );
-
-            color: #fff;
-
-            margin-bottom: 10px;
-
-        }
-
-        .final-sister {
-
-            font-size: 17px;
-
-            color: #dbc9d2;
-
-            font-style: italic;
-
-        }
-
-        .final-signature {
-
-            margin-top: 20px;
-
-            font-size: 20px;
-
-            color: #ffd3e2;
-
-            font-style: italic;
-
-        }
-
-
-        /* =====================================================
-           REPLAY BUTTON
-        ===================================================== */
-
-        .replay-button {
-
-            margin-top: 35px;
-
-            padding:
-                13px 28px;
-
-            border:
-                1px solid
-                rgba(
-                    255,
-                    255,
-                    255,
-                    0.3
-                );
-
-            border-radius: 50px;
-
-            background:
-                rgba(
-                    255,
-                    255,
-                    255,
-                    0.05
-                );
-
-            color: white;
-
-            font-size: 12px;
-
-            letter-spacing: 3px;
-
-            cursor: pointer;
-
-            transition:
-                0.4s;
-
-            backdrop-filter:
-                blur(10px);
-
-        }
-
-        .replay-button:hover {
-
-            transform:
-                scale(1.08);
-
-            background:
-                rgba(
-                    255,
-                    255,
-                    255,
-                    0.15
-                );
-
-            box-shadow:
-
-                0 0 25px
-                rgba(
-                    255,
-                    120,
-                    180,
-                    0.5
-                );
-
-        }
-
-
-        /* =====================================================
-           FINAL FLOATING HEARTS
-        ===================================================== */
-
-        .final-hearts span {
-
-            position: absolute;
-
-            bottom: -50px;
-
-            font-size: 20px;
-
-            opacity: 0;
-
-            animation:
-
-                finalHeartFloat
-                9s linear
-                infinite;
-
-        }
-
-        @keyframes finalHeartFloat {
-
-            0% {
-
-                transform:
-                    translateY(0)
-                    scale(0.5)
-                    rotate(0deg);
-
-                opacity: 0;
-
-            }
-
-            15% {
-
-                opacity: 0.7;
-
-            }
-
-            80% {
-
-                opacity: 0.7;
-
-            }
-
-            100% {
-
-                transform:
-                    translateY(-110vh)
-                    scale(1.3)
-                    rotate(20deg);
-
-                opacity: 0;
-
-            }
-
-        }
-
-
-        /* =====================================================
-           FIREWORKS
-        ===================================================== */
-
-        .firework {
-
-            position: absolute;
-
-            width: 5px;
-
-            height: 5px;
-
-            border-radius: 50%;
-
-            opacity: 0;
-
-            animation:
-
-                fireworkAppear
-                4s infinite
-                ease-out;
-
-        }
-
-        .firework-one {
-
-            top: 25%;
-
-            left: 20%;
-
-        }
-
-        .firework-two {
-
-            top: 30%;
-
-            right: 20%;
-
-            animation-delay: 1.5s;
-
-        }
-
-        .firework-three {
-
-            top: 65%;
-
-            left: 75%;
-
-            animation-delay: 3s;
-
-        }
-
-        .firework span {
-
-            position: absolute;
-
-            left: 0;
-
-            top: 0;
-
-            width: 3px;
-
-            height: 60px;
-
-            transform-origin:
-                center bottom;
-
-            border-radius: 5px;
-
-            background:
-                rgba(
-                    255,
-                    190,
-                    220,
-                    0.8
-                );
-
-            box-shadow:
-
-                0 0 10px
-                rgba(
-                    255,
-                    100,
-                    180,
-                    0.8
-                );
-
-        }
-
-        .firework span:nth-child(1) {
-
-            transform:
-                rotate(0deg)
-                translateY(-35px);
-
-        }
-
-        .firework span:nth-child(2) {
-
-            transform:
-                rotate(45deg)
-                translateY(-35px);
-
-        }
-
-        .firework span:nth-child(3) {
-
-            transform:
-                rotate(90deg)
-                translateY(-35px);
-
-        }
-
-        .firework span:nth-child(4) {
-
-            transform:
-                rotate(135deg)
-                translateY(-35px);
-
-        }
-
-        .firework span:nth-child(5) {
-
-            transform:
-                rotate(180deg)
-                translateY(-35px);
-
-        }
-
-        .firework span:nth-child(6) {
-
-            transform:
-                rotate(225deg)
-                translateY(-35px);
-
-        }
-
-        .firework span:nth-child(7) {
-
-            transform:
-                rotate(270deg)
-                translateY(-35px);
-
-        }
-
-        .firework span:nth-child(8) {
-
-            transform:
-                rotate(315deg)
-                translateY(-35px);
-
-        }
-
-        @keyframes fireworkAppear {
-
-            0% {
-
-                transform:
-                    scale(0.1);
-
-                opacity: 0;
-
-            }
-
-            15% {
-
-                opacity: 1;
-
-                transform:
-                    scale(0.5);
-
-            }
-
-            45% {
-
-                opacity: 0.9;
-
-                transform:
-                    scale(1);
-
-            }
-
-            70% {
-
-                opacity: 0.4;
-
-            }
-
-            100% {
-
-                opacity: 0;
-
-                transform:
-                    scale(1.3);
-
-            }
-
-        }
-
-
-        /* =====================================================
-           MOBILE
-        ===================================================== */
-
-        @media (max-width: 600px) {
-
-            .small-text {
-
-                font-size: 11px;
-
-                letter-spacing: 3px;
-
-            }
-
-            .main-text {
-
-                font-size: 35px;
-
-            }
-
-            .rakhi-container {
-
-                transform:
-                    scale(0.8);
-
-                margin-bottom: 10px;
-
-            }
-
-            .bond-title {
-
-                font-size: 30px;
-
-            }
-
-            .bond-lines p {
-
-                font-size: 16px;
-
-            }
-
-            .envelope-area {
-
-                transform:
-                    scale(0.8);
-
-            }
-
-            .letter-paper {
-
-                padding:
-                    30px 25px;
-
-                max-height:
-                    80vh;
-
-            }
-
-            .letter-title {
-
-                font-size: 27px;
-
-            }
-
-            .letter-message {
-
-                font-size: 15px;
-
-            }
-
-            .gallery-main {
-
-                font-size: 30px;
-
-            }
-
-            .photo-stage {
-
-                width: 90vw;
-
-                height: 55vh;
-
-            }
-
-            .photo-caption {
-
-                font-size: 14px;
-
-                bottom: 15px;
-
-            }
-
-            #musicControl {
-
-                top: 12px;
-
-                right: 12px;
-
-                padding: 6px;
-
-            }
-
-            #musicInfo {
-
-                display: none;
-
-            }
-
-            #musicButton {
-
-                width: 40px;
-
-                height: 40px;
-
-            }
-
-            .final-content {
-
-                width: 90%;
-
-            }
-
-            .final-rakhi {
-
-                font-size: 50px;
-
-            }
-
-            .final-small {
-
-                font-size: 9px;
-
-                letter-spacing: 4px;
-
-            }
-
-            .final-title {
-
-                font-size: 30px;
-
-            }
-
-            .final-message {
-
-                font-size: 20px;
-
-            }
-
-            .final-wish {
-
-                font-size: 29px;
-
-            }
-
-            .final-sister {
-
-                font-size: 15px;
-
-            }
-
-            .final-signature {
-
-                font-size: 18px;
-
-            }
-
-        }
-
-    </style>
+</style>
 
 </head>
 
@@ -2778,1329 +2142,1388 @@
 <body>
 
 
-    <!-- =====================================================
-         BACKGROUND MUSIC
-    ====================================================== -->
+<!-- =====================================================
+     MUSIC
 
-    <audio
-        id="bgMusic"
-        loop
-        preload="auto">
+     IMPORTANT:
+     This path is relative to index.html.
+===================================================== -->
 
-        <source
-            src="music/rakhi.mp3"
-            type="audio/mpeg">
+<audio
+    id="bgMusic"
+    loop
+    preload="auto">
 
-    </audio>
+    <source
+        src="./music/rakhi.mp3"
+        type="audio/mpeg">
+
+    Your browser does not support audio.
+
+</audio>
 
 
-    <!-- =====================================================
-         MUSIC CONTROL
-    ====================================================== -->
+<!-- =====================================================
+     MUSIC CONTROL
+===================================================== -->
 
-    <div id="musicControl">
+<div id="musicControl">
 
-        <button
-            id="musicButton"
-            onclick="toggleMusic()">
+    <button
+        id="musicButton"
+        onclick="toggleMusic()">
 
-            🎵
+        🎵
 
-        </button>
+    </button>
 
-        <div id="musicInfo">
+    <div id="musicInfo">
 
-            <span id="musicStatus">
+        <span id="musicStatus">
 
-                Music Off
+            Music Off
 
-            </span>
+        </span>
 
-            <input
-                id="volumeSlider"
-                type="range"
-                min="0"
-                max="1"
-                step="0.01"
-                value="0.5"
-                onchange="changeVolume(this.value)"
-            >
+        <input
+            id="volumeSlider"
+            type="range"
+            min="0"
+            max="1"
+            step="0.01"
+            value="0.5"
+            onchange="changeVolume(this.value)"
+        >
 
-        </div>
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     SCENE 1
+===================================================== -->
+
+<section
+    id="scene1"
+    class="scene active">
+
+
+    <div class="stars">
+
+        <span
+            class="star"
+            style="top:10%;left:15%;">
+        </span>
+
+        <span
+            class="star"
+            style="top:20%;left:70%;animation-delay:1s;">
+        </span>
+
+        <span
+            class="star"
+            style="top:35%;left:30%;animation-delay:2s;">
+        </span>
+
+        <span
+            class="star"
+            style="top:15%;left:90%;animation-delay:1.5s;">
+        </span>
+
+        <span
+            class="star"
+            style="top:60%;left:10%;animation-delay:.5s;">
+        </span>
+
+        <span
+            class="star"
+            style="top:75%;left:80%;animation-delay:2.5s;">
+        </span>
+
+        <span
+            class="star"
+            style="top:85%;left:40%;animation-delay:1.2s;">
+        </span>
 
     </div>
 
 
-    <!-- =====================================================
-         SCENE 1 — INTRO
-    ====================================================== -->
+    <span
+        class="particle"
+        style="left:10%;animation-delay:1s;">
+    </span>
 
-    <section
-        id="scene1"
-        class="scene active">
+    <span
+        class="particle"
+        style="left:30%;animation-delay:3s;">
+    </span>
+
+    <span
+        class="particle"
+        style="left:50%;animation-delay:2s;">
+    </span>
+
+    <span
+        class="particle"
+        style="left:70%;animation-delay:5s;">
+    </span>
+
+    <span
+        class="particle"
+        style="left:90%;animation-delay:4s;">
+    </span>
 
 
-        <div class="stars">
+    <div class="intro-content">
 
-            <span
-                class="star"
-                style="top:10%;left:15%;">
-            </span>
+        <div class="small-text">
 
-            <span
-                class="star"
-                style="top:20%;left:70%;animation-delay:1s;">
-            </span>
-
-            <span
-                class="star"
-                style="top:35%;left:30%;animation-delay:2s;">
-            </span>
-
-            <span
-                class="star"
-                style="top:15%;left:90%;animation-delay:1.5s;">
-            </span>
-
-            <span
-                class="star"
-                style="top:60%;left:10%;animation-delay:.5s;">
-            </span>
-
-            <span
-                class="star"
-                style="top:75%;left:80%;animation-delay:2.5s;">
-            </span>
-
-            <span
-                class="star"
-                style="top:85%;left:40%;animation-delay:1.2s;">
-            </span>
+            A Little Story For Someone Special
 
         </div>
 
 
-        <span
-            class="particle"
-            style="left:10%;animation-delay:1s;">
-        </span>
+        <div class="main-text">
 
-        <span
-            class="particle"
-            style="left:30%;animation-delay:3s;">
-        </span>
+            Some bonds are written<br>
 
-        <span
-            class="particle"
-            style="left:50%;animation-delay:2s;">
-        </span>
-
-        <span
-            class="particle"
-            style="left:70%;animation-delay:5s;">
-        </span>
-
-        <span
-            class="particle"
-            style="left:90%;animation-delay:4s;">
-        </span>
-
-
-        <div class="intro-content">
-
-            <div class="small-text">
-
-                A Little Story For Someone Special
-
-            </div>
-
-
-            <div class="main-text">
-
-                Some bonds are written<br>
-
-                by destiny...
-
-            </div>
-
-
-            <div class="second-text">
-
-                And some are simply a beautiful gift. ❤️
-
-            </div>
-
-
-            <button
-                class="start-button"
-                onclick="showRakhi()">
-
-                BEGIN THE JOURNEY ✨
-
-            </button>
+            by destiny...
 
         </div>
 
 
-        <div class="vignette"></div>
+        <div class="second-text">
 
-    </section>
-
-
-    <!-- =====================================================
-         SCENE 2 — RAKHI
-    ====================================================== -->
-
-    <section
-        id="scene2"
-        class="scene">
-
-
-        <div class="rakhi-container">
-
-            <div class="rakhi-glow"></div>
-
-            <div class="thread-left"></div>
-
-            <div class="thread-right"></div>
-
-            <div class="rakhi-center"></div>
+            And some are simply a beautiful gift. ❤️
 
         </div>
 
 
-        <h1 class="reveal-title">
+        <button
+            class="start-button"
+            onclick="showRakhi()">
 
-            A Bond Beyond Words ❤️
+            BEGIN THE JOURNEY ✨
+
+        </button>
+
+    </div>
+
+
+    <div class="vignette"></div>
+
+</section>
+
+
+<!-- =====================================================
+     SCENE 2
+===================================================== -->
+
+<section
+    id="scene2"
+    class="scene">
+
+
+    <div class="rakhi-container">
+
+        <div class="rakhi-glow"></div>
+
+        <div class="thread-left"></div>
+
+        <div class="thread-right"></div>
+
+        <div class="rakhi-center"></div>
+
+    </div>
+
+
+    <h1 class="reveal-title">
+
+        A Bond Beyond Words ❤️
+
+    </h1>
+
+
+    <p class="reveal-subtitle">
+
+        A little thread... carrying a lifetime of love.
+
+    </p>
+
+
+    <button
+        class="continue-button"
+        onclick="nextScene()">
+
+        CONTINUE ✨
+
+    </button>
+
+
+    <div class="vignette"></div>
+
+</section>
+
+
+<!-- =====================================================
+     SCENE 3
+===================================================== -->
+
+<section
+    id="scene3"
+    class="scene">
+
+
+    <div class="bond-glow"></div>
+
+
+    <div class="bond-heart">
+
+        ❤️
+
+    </div>
+
+
+    <div class="bond-content">
+
+
+        <div class="bond-small">
+
+            OUR STORY
+
+        </div>
+
+
+        <h1 class="bond-title">
+
+            It's More Than Just Being Siblings
 
         </h1>
 
 
-        <p class="reveal-subtitle">
+        <div class="bond-lines">
 
-            A little thread... carrying a lifetime of love.
+
+            <p>
+
+                We have shared laughter...
+
+            </p>
+
+
+            <p>
+
+                We have shared countless memories...
+
+            </p>
+
+
+            <p>
+
+                We have annoyed each other more times than we can count... 😂
+
+            </p>
+
+
+            <p>
+
+                But through everything...
+
+            </p>
+
+
+            <p class="special-line">
+
+                You have always been someone special in my life. ❤️
+
+            </p>
+
+
+        </div>
+
+
+        <button
+            class="bond-button"
+            onclick="showLetter()">
+
+            THERE'S SOMETHING I WANT TO TELL YOU 💌
+
+        </button>
+
+
+    </div>
+
+
+    <div class="vignette"></div>
+
+</section>
+
+
+<!-- =====================================================
+     SCENE 4
+===================================================== -->
+
+<section
+    id="scene4"
+    class="scene">
+
+
+    <div class="letter-intro">
+
+        A MESSAGE FROM YOUR BROTHER ❤️
+
+    </div>
+
+
+    <div
+        id="envelopeArea"
+        class="envelope-area"
+        onclick="openLetter()">
+
+
+        <div class="envelope-glow"></div>
+
+
+        <div class="envelope">
+
+            <div class="envelope-flap"></div>
+
+            <div class="seal">
+
+                ❤️
+
+            </div>
+
+        </div>
+
+
+        <div class="open-text">
+
+            CLICK THE LETTER TO OPEN 💌
+
+        </div>
+
+
+    </div>
+
+
+    <div
+        id="letterPaper"
+        class="letter-paper">
+
+
+        <div class="paper-decoration">
+
+            🎀 ❤️ 🎀
+
+        </div>
+
+
+        <h2 class="letter-title">
+
+            To My Beautiful Sister
+
+        </h2>
+
+
+        <div
+            id="letterMessage"
+            class="letter-message">
+        </div>
+
+
+        <div
+            id="letterSignature"
+            class="letter-signature">
+        </div>
+
+
+        <button
+            id="letterContinue"
+            class="letter-continue"
+            onclick="continueFromLetter(event)">
+
+            LOOK AT OUR MEMORIES 📸
+
+        </button>
+
+
+    </div>
+
+
+    <div class="vignette"></div>
+
+</section>
+
+
+<!-- =====================================================
+     SCENE 5 — MEMORIES
+===================================================== -->
+
+<section
+    id="scene5"
+    class="scene">
+
+
+    <div class="gallery-background"></div>
+
+
+    <div class="gallery-title">
+
+
+        <div class="gallery-small">
+
+            A FEW MOMENTS
+
+        </div>
+
+
+        <h1 class="gallery-main">
+
+            Memories We Made ❤️
+
+        </h1>
+
+
+    </div>
+
+
+    <div
+        id="photoStage"
+        class="photo-stage">
+
+
+        <div class="memory-card active">
+
+            <img
+                class="memory-photo"
+                src="./photos/photo1.jpg"
+                alt="Memory 1">
+
+            <div class="photo-caption">
+
+                One of those moments I'll always remember. ❤️
+
+            </div>
+
+        </div>
+
+
+        <div class="memory-card">
+
+            <img
+                class="memory-photo"
+                src="./photos/photo2.jpg"
+                alt="Memory 2">
+
+            <div class="photo-caption">
+
+                Some memories never get old. ✨
+
+            </div>
+
+        </div>
+
+
+        <div class="memory-card">
+
+            <img
+                class="memory-photo"
+                src="./photos/photo3.jpg"
+                alt="Memory 3">
+
+            <div class="photo-caption">
+
+                Happiness looks a lot like this. ❤️
+
+            </div>
+
+        </div>
+
+
+        <div class="memory-card">
+
+            <img
+                class="memory-photo"
+                src="./photos/photo4.jpg"
+                alt="Memory 4">
+
+            <div class="photo-caption">
+
+                A memory worth keeping forever. 🌸
+
+            </div>
+
+        </div>
+
+
+        <div class="memory-card">
+
+            <img
+                class="memory-photo"
+                src="./photos/photo5.jpg"
+                alt="Memory 5">
+
+            <div class="photo-caption">
+
+                Through every chapter... ❤️
+
+            </div>
+
+        </div>
+
+
+        <div class="memory-card">
+
+            <img
+                class="memory-photo"
+                src="./photos/photo6.jpg"
+                alt="Memory 6">
+
+            <div class="photo-caption">
+
+                And many more memories to come... 🎀
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <span
+        class="gallery-heart"
+        style="left:10%;animation-delay:1s;">
+
+        ❤️
+
+    </span>
+
+
+    <span
+        class="gallery-heart"
+        style="left:25%;animation-delay:4s;">
+
+        🤍
+
+    </span>
+
+
+    <span
+        class="gallery-heart"
+        style="left:45%;animation-delay:2s;">
+
+        ❤️
+
+    </span>
+
+
+    <span
+        class="gallery-heart"
+        style="left:65%;animation-delay:5s;">
+
+        💕
+
+    </span>
+
+
+    <span
+        class="gallery-heart"
+        style="left:85%;animation-delay:3s;">
+
+        ❤️
+
+    </span>
+
+
+    <div class="gallery-controls">
+
+
+        <button
+            class="gallery-button"
+            onclick="previousPhoto()">
+
+            ‹
+
+        </button>
+
+
+        <div
+            id="photoCounter"
+            class="photo-counter">
+
+            01 / 06
+
+        </div>
+
+
+        <button
+            class="gallery-button"
+            onclick="nextPhoto()">
+
+            ›
+
+        </button>
+
+
+    </div>
+
+
+    <div class="vignette"></div>
+
+</section>
+
+
+<!-- =====================================================
+     SCENE 6 — FINAL SURPRISE
+===================================================== -->
+
+<section
+    id="scene6"
+    class="scene final-scene">
+
+
+    <div class="final-background"></div>
+
+
+    <div class="final-hearts">
+
+        <span
+            style="left:10%;animation-delay:0s;">
+            ❤️
+        </span>
+
+        <span
+            style="left:20%;animation-delay:2s;">
+            💕
+        </span>
+
+        <span
+            style="left:35%;animation-delay:4s;">
+            🤍
+        </span>
+
+        <span
+            style="left:50%;animation-delay:1s;">
+            ❤️
+        </span>
+
+        <span
+            style="left:65%;animation-delay:3s;">
+            💕
+        </span>
+
+        <span
+            style="left:80%;animation-delay:5s;">
+            🤍
+        </span>
+
+        <span
+            style="left:90%;animation-delay:2.5s;">
+            ❤️
+        </span>
+
+    </div>
+
+
+    <div class="firework firework-one">
+
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+
+    </div>
+
+
+    <div class="firework firework-two">
+
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+
+    </div>
+
+
+    <div class="firework firework-three">
+
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+
+    </div>
+
+
+    <div class="final-content">
+
+
+        <div class="final-rakhi">
+
+            🎀
+
+        </div>
+
+
+        <div class="final-small">
+
+            ONE LAST THING...
+
+        </div>
+
+
+        <h1 class="final-title">
+
+            No Matter How Much We Grow...
+
+        </h1>
+
+
+        <p class="final-message">
+
+            You'll always be my little sister. ❤️
+
+        </p>
+
+
+        <div class="final-line"></div>
+
+
+        <p class="final-wish">
+
+            Happy Raksha Bandhan
+
+        </p>
+
+
+        <p class="final-sister">
+
+            To the most special sister ever. 💕
+
+        </p>
+
+
+        <p class="final-signature">
+
+            — Your Brother ❤️
 
         </p>
 
 
         <button
-            class="continue-button"
-            onclick="nextScene()">
+            class="replay-button"
+            onclick="replayExperience()">
 
-            CONTINUE ✨
+            EXPERIENCE IT AGAIN ✨
 
         </button>
 
 
-        <div class="vignette"></div>
+    </div>
 
-    </section>
 
+    <div class="vignette"></div>
 
-    <!-- =====================================================
-         SCENE 3 — BOND
-    ====================================================== -->
+</section>
 
-    <section
-        id="scene3"
-        class="scene">
 
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
 
-        <div class="bond-glow"></div>
+<script>
 
 
-        <div class="bond-heart">
+/* =====================================================
+   MUSIC
+===================================================== */
 
-            ❤️
+const bgMusic =
+    document.getElementById("bgMusic");
 
-        </div>
+const musicButton =
+    document.getElementById("musicButton");
 
+const musicStatus =
+    document.getElementById("musicStatus");
 
-        <div class="bond-content">
+const volumeSlider =
+    document.getElementById("volumeSlider");
 
 
-            <div class="bond-small">
+bgMusic.volume = 0.5;
 
-                OUR STORY
 
-            </div>
+/* =====================================================
+   START MUSIC
+===================================================== */
 
+function startMusic() {
 
-            <h1 class="bond-title">
+    bgMusic.volume =
+        Number(volumeSlider.value);
 
-                It's More Than Just Being Siblings
+    const playPromise =
+        bgMusic.play();
 
-            </h1>
+    if (playPromise !== undefined) {
 
+        playPromise
 
-            <div class="bond-lines">
+            .then(() => {
 
+                musicButton.textContent =
+                    "🎶";
 
-                <p>
+                musicStatus.textContent =
+                    "Music On";
 
-                    We have shared laughter...
+                musicButton.classList.add(
+                    "music-playing"
+                );
 
-                </p>
+            })
 
+            .catch((error) => {
 
-                <p>
+                console.log(
+                    "Browser blocked autoplay:",
+                    error
+                );
 
-                    We have shared countless memories...
-
-                </p>
-
-
-                <p>
-
-                    We have annoyed each other more times than we can count... 😂
-
-                </p>
-
-
-                <p>
-
-                    But through everything...
-
-                </p>
-
-
-                <p class="special-line">
-
-                    You have always been someone special in my life. ❤️
-
-                </p>
-
-
-            </div>
-
-
-            <button
-                class="bond-button"
-                onclick="showLetter()">
-
-                THERE'S SOMETHING I WANT TO TELL YOU 💌
-
-            </button>
-
-
-        </div>
-
-
-        <div class="vignette"></div>
-
-    </section>
-
-
-    <!-- =====================================================
-         SCENE 4 — LETTER
-    ====================================================== -->
-
-    <section
-        id="scene4"
-        class="scene">
-
-
-        <div class="letter-intro">
-
-            A MESSAGE FROM YOUR BROTHER ❤️
-
-        </div>
-
-
-        <div
-            id="envelopeArea"
-            class="envelope-area"
-            onclick="openLetter()">
-
-
-            <div class="envelope-glow"></div>
-
-
-            <div class="envelope">
-
-
-                <div class="envelope-flap"></div>
-
-
-                <div class="seal">
-
-                    ❤️
-
-                </div>
-
-
-            </div>
-
-
-            <div class="open-text">
-
-                CLICK THE LETTER TO OPEN 💌
-
-            </div>
-
-
-        </div>
-
-
-        <div
-            id="letterPaper"
-            class="letter-paper">
-
-
-            <div class="paper-decoration">
-
-                🎀 ❤️ 🎀
-
-            </div>
-
-
-            <h2 class="letter-title">
-
-                To My Beautiful Sister
-
-            </h2>
-
-
-            <div
-                id="letterMessage"
-                class="letter-message">
-            </div>
-
-
-            <div
-                id="letterSignature"
-                class="letter-signature">
-            </div>
-
-
-            <button
-                id="letterContinue"
-                class="letter-continue"
-                onclick="continueFromLetter(event)">
-
-                LOOK AT OUR MEMORIES 📸
-
-            </button>
-
-
-        </div>
-
-
-        <div class="vignette"></div>
-
-    </section>
-
-
-    <!-- =====================================================
-         SCENE 5 — MEMORIES
-    ====================================================== -->
-
-    <section
-        id="scene5"
-        class="scene">
-
-
-        <div class="gallery-background"></div>
-
-
-        <div class="gallery-title">
-
-
-            <div class="gallery-small">
-
-                A FEW MOMENTS
-
-            </div>
-
-
-            <h1 class="gallery-main">
-
-                Memories We Made ❤️
-
-            </h1>
-
-
-        </div>
-
-
-        <div
-            id="photoStage"
-            class="photo-stage">
-
-
-            <!-- PHOTO 1 -->
-
-            <div
-                class="memory-card active">
-
-                <img
-                    class="memory-photo"
-                    src="photos/photo1.jpg"
-                    alt="Memory 1">
-
-                <div class="photo-caption">
-
-                    One of those moments I'll always remember. ❤️
-
-                </div>
-
-            </div>
-
-
-            <!-- PHOTO 2 -->
-
-            <div
-                class="memory-card">
-
-                <img
-                    class="memory-photo"
-                    src="photos/photo2.jpg"
-                    alt="Memory 2">
-
-                <div class="photo-caption">
-
-                    Some memories never get old. ✨
-
-                </div>
-
-            </div>
-
-
-            <!-- PHOTO 3 -->
-
-            <div
-                class="memory-card">
-
-                <img
-                    class="memory-photo"
-                    src="photos/photo3.jpg"
-                    alt="Memory 3">
-
-                <div class="photo-caption">
-
-                    Happiness looks a lot like this. ❤️
-
-                </div>
-
-            </div>
-
-
-            <!-- PHOTO 4 -->
-
-            <div
-                class="memory-card">
-
-                <img
-                    class="memory-photo"
-                    src="photos/photo4.jpg"
-                    alt="Memory 4">
-
-                <div class="photo-caption">
-
-                    A memory worth keeping forever. 🌸
-
-                </div>
-
-            </div>
-
-
-            <!-- PHOTO 5 -->
-
-            <div
-                class="memory-card">
-
-                <img
-                    class="memory-photo"
-                    src="photos/photo5.jpg"
-                    alt="Memory 5">
-
-                <div class="photo-caption">
-
-                    Through every chapter... ❤️
-
-                </div>
-
-            </div>
-
-
-            <!-- PHOTO 6 -->
-
-            <div
-                class="memory-card">
-
-                <img
-                    class="memory-photo"
-                    src="photos/photo6.jpg"
-                    alt="Memory 6">
-
-                <div class="photo-caption">
-
-                    And many more memories to come... 🎀
-
-                </div>
-
-            </div>
-
-
-        </div>
-
-
-        <!-- FLOATING HEARTS -->
-
-        <span
-            class="gallery-heart"
-            style="left:10%;animation-delay:1s;">
-
-            ❤️
-
-        </span>
-
-
-        <span
-            class="gallery-heart"
-            style="left:25%;animation-delay:4s;">
-
-            🤍
-
-        </span>
-
-
-        <span
-            class="gallery-heart"
-            style="left:45%;animation-delay:2s;">
-
-            ❤️
-
-        </span>
-
-
-        <span
-            class="gallery-heart"
-            style="left:65%;animation-delay:5s;">
-
-            💕
-
-        </span>
-
-
-        <span
-            class="gallery-heart"
-            style="left:85%;animation-delay:3s;">
-
-            ❤️
-
-        </span>
-
-
-        <!-- GALLERY CONTROLS -->
-
-        <div class="gallery-controls">
-
-
-            <button
-                class="gallery-button"
-                onclick="previousPhoto()">
-
-                ‹
-
-            </button>
-
-
-            <div
-                id="photoCounter"
-                class="photo-counter">
-
-                01 / 06
-
-            </div>
-
-
-            <button
-                class="gallery-button"
-                onclick="nextPhoto()">
-
-                ›
-
-            </button>
-
-
-        </div>
-
-
-        <div class="vignette"></div>
-
-    </section>
-
-
-    <!-- =====================================================
-         SCENE 6 — FINAL SURPRISE
-    ====================================================== -->
-
-    <section
-        id="scene6"
-        class="scene final-scene">
-
-
-        <div class="final-background"></div>
-
-
-        <!-- FLOATING HEARTS -->
-
-        <div class="final-hearts">
-
-            <span
-                style="left:10%;animation-delay:0s;">
-                ❤️
-            </span>
-
-            <span
-                style="left:20%;animation-delay:2s;">
-                💕
-            </span>
-
-            <span
-                style="left:35%;animation-delay:4s;">
-                🤍
-            </span>
-
-            <span
-                style="left:50%;animation-delay:1s;">
-                ❤️
-            </span>
-
-            <span
-                style="left:65%;animation-delay:3s;">
-                💕
-            </span>
-
-            <span
-                style="left:80%;animation-delay:5s;">
-                🤍
-            </span>
-
-            <span
-                style="left:90%;animation-delay:2.5s;">
-                ❤️
-            </span>
-
-        </div>
-
-
-        <!-- FIREWORK 1 -->
-
-        <div
-            class="firework firework-one">
-
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-
-        </div>
-
-
-        <!-- FIREWORK 2 -->
-
-        <div
-            class="firework firework-two">
-
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-
-        </div>
-
-
-        <!-- FIREWORK 3 -->
-
-        <div
-            class="firework firework-three">
-
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-
-        </div>
-
-
-        <!-- FINAL CONTENT -->
-
-        <div class="final-content">
-
-
-            <div class="final-rakhi">
-
-                🎀
-
-            </div>
-
-
-            <div class="final-small">
-
-                ONE LAST THING...
-
-            </div>
-
-
-            <h1 class="final-title">
-
-                No Matter How Much We Grow...
-
-            </h1>
-
-
-            <p class="final-message">
-
-                You'll always be my little sister. ❤️
-
-            </p>
-
-
-            <div class="final-line"></div>
-
-
-            <p class="final-wish">
-
-                Happy Raksha Bandhan
-
-            </p>
-
-
-            <p class="final-sister">
-
-                To the most special sister ever. 💕
-
-            </p>
-
-
-            <p class="final-signature">
-
-                — Your Brother ❤️
-
-            </p>
-
-
-            <button
-                class="replay-button"
-                onclick="replayExperience()">
-
-                EXPERIENCE IT AGAIN ✨
-
-            </button>
-
-
-        </div>
-
-
-        <div class="vignette"></div>
-
-    </section>
-
-
-    <!-- =====================================================
-         JAVASCRIPT
-    ====================================================== -->
-
-    <script>
-
-
-        /* =====================================================
-           MUSIC
-        ===================================================== */
-
-        const bgMusic =
-            document.getElementById(
-                "bgMusic"
-            );
-
-        const musicButton =
-            document.getElementById(
-                "musicButton"
-            );
-
-        const musicStatus =
-            document.getElementById(
-                "musicStatus"
-            );
-
-        const volumeSlider =
-            document.getElementById(
-                "volumeSlider"
-            );
-
-
-        bgMusic.volume = 0.5;
-
-
-        /* =====================================================
-           START MUSIC
-        ===================================================== */
-
-        function startMusic() {
-
-            bgMusic.volume =
-                volumeSlider.value;
-
-
-            bgMusic.play()
-
-                .then(() => {
-
-                    musicButton.textContent =
-                        "🎶";
-
-                    musicStatus.textContent =
-                        "Music On";
-
-                    musicButton.classList.add(
-                        "music-playing"
-                    );
-
-                })
-
-                .catch(() => {
-
-                    console.log(
-                        "Music could not start."
-                    );
-
-                });
-
-        }
-
-
-        /* =====================================================
-           TOGGLE MUSIC
-        ===================================================== */
-
-        function toggleMusic() {
-
-            if (
-                bgMusic.paused
-            ) {
-
-                bgMusic.play()
-
-                    .then(() => {
-
-                        musicButton.textContent =
-                            "🎶";
-
-                        musicStatus.textContent =
-                            "Music On";
-
-                        musicButton.classList.add(
-                            "music-playing"
-                        );
-
-                    });
-
-            }
-
-            else {
-
-                bgMusic.pause();
+                musicStatus.textContent =
+                    "Tap 🎵 for Music";
 
                 musicButton.textContent =
                     "🎵";
 
-                musicStatus.textContent =
-                    "Music Off";
+            });
 
-                musicButton.classList.remove(
+    }
+
+}
+
+
+/* =====================================================
+   TOGGLE MUSIC
+
+   This is the important part:
+   Clicking the music button directly gives
+   the browser a user interaction, so music
+   should be allowed to play.
+===================================================== */
+
+function toggleMusic() {
+
+    if (bgMusic.paused) {
+
+        bgMusic.play()
+
+            .then(() => {
+
+                musicButton.textContent =
+                    "🎶";
+
+                musicStatus.textContent =
+                    "Music On";
+
+                musicButton.classList.add(
                     "music-playing"
                 );
 
-            }
+            })
 
-        }
+            .catch((error) => {
 
-
-        /* =====================================================
-           VOLUME
-        ===================================================== */
-
-        function changeVolume(value) {
-
-            bgMusic.volume =
-                value;
-
-        }
-
-
-        /* =====================================================
-           SCENE 1 → SCENE 2
-        ===================================================== */
-
-        function showRakhi() {
-
-            startMusic();
-
-            document
-                .getElementById("scene1")
-                .classList
-                .remove("active");
-
-
-            setTimeout(() => {
-
-                document
-                    .getElementById("scene2")
-                    .classList
-                    .add("active");
-
-            }, 700);
-
-        }
-
-
-        /* =====================================================
-           SCENE 2 → SCENE 3
-        ===================================================== */
-
-        function nextScene() {
-
-            document
-                .getElementById("scene2")
-                .classList
-                .remove("active");
-
-
-            setTimeout(() => {
-
-                document
-                    .getElementById("scene3")
-                    .classList
-                    .add("active");
-
-            }, 700);
-
-        }
-
-
-        /* =====================================================
-           SCENE 3 → SCENE 4
-        ===================================================== */
-
-        function showLetter() {
-
-            document
-                .getElementById("scene3")
-                .classList
-                .remove("active");
-
-
-            setTimeout(() => {
-
-                document
-                    .getElementById("scene4")
-                    .classList
-                    .add("active");
-
-            }, 700);
-
-        }
-
-
-        /* =====================================================
-           OPEN LETTER
-        ===================================================== */
-
-        function openLetter() {
-
-            const envelope =
-                document.getElementById(
-                    "envelopeArea"
+                console.log(
+                    "Music playback error:",
+                    error
                 );
 
-            const paper =
-                document.getElementById(
-                    "letterPaper"
-                );
+                musicStatus.textContent =
+                    "Music Error";
+
+            });
+
+    }
+
+    else {
+
+        bgMusic.pause();
+
+        musicButton.textContent =
+            "🎵";
+
+        musicStatus.textContent =
+            "Music Off";
+
+        musicButton.classList.remove(
+            "music-playing"
+        );
+
+    }
+
+}
 
 
-            if (
-                envelope.classList.contains(
-                    "open"
-                )
-            ) {
+/* =====================================================
+   VOLUME
+===================================================== */
 
-                return;
+function changeVolume(value) {
 
-            }
+    bgMusic.volume =
+        Number(value);
+
+}
 
 
-            envelope.classList.add(
-                "open"
+/* =====================================================
+   SCENE 1 → SCENE 2
+===================================================== */
+
+function showRakhi() {
+
+    /*
+       The button click is a real user interaction,
+       so this is the best moment to start music.
+    */
+
+    startMusic();
+
+
+    document
+        .getElementById("scene1")
+        .classList
+        .remove("active");
+
+
+    setTimeout(() => {
+
+        document
+            .getElementById("scene2")
+            .classList
+            .add("active");
+
+    }, 700);
+
+}
+
+
+/* =====================================================
+   SCENE 2 → SCENE 3
+===================================================== */
+
+function nextScene() {
+
+    document
+        .getElementById("scene2")
+        .classList
+        .remove("active");
+
+
+    setTimeout(() => {
+
+        document
+            .getElementById("scene3")
+            .classList
+            .add("active");
+
+    }, 700);
+
+}
+
+
+/* =====================================================
+   SCENE 3 → SCENE 4
+===================================================== */
+
+function showLetter() {
+
+    document
+        .getElementById("scene3")
+        .classList
+        .remove("active");
+
+
+    setTimeout(() => {
+
+        document
+            .getElementById("scene4")
+            .classList
+            .add("active");
+
+    }, 700);
+
+}
+
+
+/* =====================================================
+   OPEN LETTER
+===================================================== */
+
+function openLetter() {
+
+    const envelope =
+        document.getElementById(
+            "envelopeArea"
+        );
+
+    const paper =
+        document.getElementById(
+            "letterPaper"
+        );
+
+
+    if (
+        envelope.classList.contains(
+            "open"
+        )
+    ) {
+
+        return;
+
+    }
+
+
+    envelope.classList.add(
+        "open"
+    );
+
+
+    setTimeout(() => {
+
+        paper.classList.add(
+            "show"
+        );
+
+    }, 900);
+
+
+    setTimeout(() => {
+
+        typeLetter();
+
+    }, 2200);
+
+}
+
+
+/* =====================================================
+   TYPEWRITER LETTER
+===================================================== */
+
+function typeLetter() {
+
+    const message =
+        document.getElementById(
+            "letterMessage"
+        );
+
+    const signature =
+        document.getElementById(
+            "letterSignature"
+        );
+
+    const continueButton =
+        document.getElementById(
+            "letterContinue"
+        );
+
+
+    const text = [
+
+        "Dear Sis, ❤️",
+
+        "On this Raksha Bandhan, I just want you to know how grateful I am to have you in my life.",
+
+        "You are not just my sister. You are someone who makes ordinary moments special, someone I can laugh with, argue with, annoy, and still care about more than I can ever explain.",
+
+        "No matter where life takes us or how much we grow, one thing will never change — you will always have a special place in my heart.",
+
+        "I may not say it every day, but I will always wish the very best for you, support you, and be there whenever you need me.",
+
+        "Happy Raksha Bandhan, Sis. 🎀❤️"
+
+    ];
+
+
+    let paragraphIndex = 0;
+
+
+    message.innerHTML = "";
+
+    signature.innerHTML = "";
+
+    continueButton.style.display =
+        "none";
+
+
+    function showParagraph() {
+
+        if (
+            paragraphIndex >=
+            text.length
+        ) {
+
+            signature.innerHTML =
+                "With lots of love,<br>Your Brother ❤️";
+
+            continueButton.style.display =
+                "inline-block";
+
+            return;
+
+        }
+
+
+        const paragraph =
+            document.createElement(
+                "p"
             );
 
 
-            setTimeout(() => {
-
-                paper.classList.add(
-                    "show"
-                );
-
-            }, 900);
+        message.appendChild(
+            paragraph
+        );
 
 
-            setTimeout(() => {
-
-                typeLetter();
-
-            }, 2200);
-
-        }
-
-
-        /* =====================================================
-           TYPEWRITER LETTER
-        ===================================================== */
-
-        function typeLetter() {
-
-            const message =
-                document.getElementById(
-                    "letterMessage"
-                );
-
-            const signature =
-                document.getElementById(
-                    "letterSignature"
-                );
-
-            const continueButton =
-                document.getElementById(
-                    "letterContinue"
-                );
-
-
-            const text = [
-
-                "Dear Sis, ❤️",
-
-                "On this Raksha Bandhan, I just want you to know how grateful I am to have you in my life.",
-
-                "You are not just my sister. You are someone who makes ordinary moments special, someone I can laugh with, argue with, annoy, and still care about more than I can ever explain.",
-
-                "No matter where life takes us or how much we grow, one thing will never change — you will always have a special place in my heart.",
-
-                "I may not say it every day, but I will always wish the very best for you, support you, and be there whenever you need me.",
-
-                "Happy Raksha Bandhan, Sis. 🎀❤️"
-
+        const currentText =
+            text[
+                paragraphIndex
             ];
 
 
-            let paragraphIndex = 0;
+        let characterIndex = 0;
 
 
-            message.innerHTML = "";
+        const typing =
+            setInterval(() => {
 
-            signature.innerHTML = "";
+                paragraph.textContent +=
+                    currentText[
+                        characterIndex
+                    ];
 
-            continueButton.style.display =
-                "none";
+                characterIndex++;
 
-
-            function showParagraph() {
 
                 if (
-                    paragraphIndex >=
-                    text.length
+                    characterIndex >=
+                    currentText.length
                 ) {
 
-                    signature.innerHTML =
-                        "With lots of love,<br>Your Brother ❤️";
+                    clearInterval(
+                        typing
+                    );
 
-                    continueButton.style.display =
-                        "inline-block";
+                    paragraphIndex++;
 
-                    return;
+
+                    setTimeout(
+                        showParagraph,
+                        400
+                    );
 
                 }
 
+            }, 20);
 
-                const paragraph =
-                    document.createElement(
-                        "p"
-                    );
+    }
 
 
-                message.appendChild(
-                    paragraph
-                );
+    showParagraph();
+
+}
 
 
-                const currentText =
-                    text[
-                        paragraphIndex
-                    ];
+/* =====================================================
+   LETTER → GALLERY
+===================================================== */
+
+function continueFromLetter(event) {
+
+    event.stopPropagation();
 
 
-                let characterIndex = 0;
+    document
+        .getElementById("scene4")
+        .classList
+        .remove("active");
 
 
-                const typing =
-                    setInterval(() => {
+    setTimeout(() => {
 
-                        paragraph.textContent +=
-                            currentText[
-                                characterIndex
-                            ];
-
-                        characterIndex++;
+        document
+            .getElementById("scene5")
+            .classList
+            .add("active");
 
 
-                        if (
-                            characterIndex >=
-                            currentText.length
-                        ) {
+        startGallery();
 
-                            clearInterval(
-                                typing
-                            );
+    }, 700);
 
-                            paragraphIndex++;
+}
 
 
-                            setTimeout(
-                                showParagraph,
-                                400
-                            );
+/* =====================================================
+   MEMORY GALLERY
+===================================================== */
 
-                        }
+let currentPhoto = 0;
 
-                    }, 20);
-
-            }
+let galleryTimer;
 
 
-            showParagraph();
-
-        }
-
-
-        /* =====================================================
-           LETTER → GALLERY
-        ===================================================== */
-
-        function continueFromLetter(event) {
-
-            event.stopPropagation();
+const photos =
+    document.querySelectorAll(
+        ".memory-card"
+    );
 
 
-            document
-                .getElementById("scene4")
-                .classList
-                .remove("active");
+function showPhoto(index) {
+
+    photos[
+        currentPhoto
+    ].classList.remove(
+        "active"
+    );
 
 
-            setTimeout(() => {
-
-                document
-                    .getElementById("scene5")
-                    .classList
-                    .add("active");
+    currentPhoto =
+        index;
 
 
-                startGallery();
-
-            }, 700);
-
-        }
-
-
-        /* =====================================================
-           MEMORY GALLERY
-        ===================================================== */
-
-        let currentPhoto = 0;
-
-        let galleryTimer;
+    photos[
+        currentPhoto
+    ].classList.add(
+        "active"
+    );
 
 
-        const photos =
-            document.querySelectorAll(
-                ".memory-card"
-            );
+    document
+        .getElementById(
+            "photoCounter"
+        )
+        .textContent =
+
+        String(
+            currentPhoto + 1
+        ).padStart(
+            2,
+            "0"
+        )
+
+        + " / "
+
+        +
+
+        String(
+            photos.length
+        ).padStart(
+            2,
+            "0"
+        );
+
+}
 
 
-        function showPhoto(index) {
+/* =====================================================
+   NEXT PHOTO
+===================================================== */
 
-            photos[
-                currentPhoto
-            ].classList.remove(
-                "active"
-            );
+function nextPhoto() {
 
-
-            currentPhoto =
-                index;
+    let next =
+        currentPhoto + 1;
 
 
-            photos[
-                currentPhoto
-            ].classList.add(
-                "active"
-            );
+    if (
+        next >=
+        photos.length
+    ) {
+
+        clearInterval(
+            galleryTimer
+        );
 
 
-            document
-                .getElementById(
-                    "photoCounter"
-                )
-                .textContent =
-
-                String(
-                    currentPhoto + 1
-                ).padStart(
-                    2,
-                    "0"
-                )
-
-                + " / "
-
-                +
-
-                String(
-                    photos.length
-                ).padStart(
-                    2,
-                    "0"
-                );
-
-        }
+        showFinalSurprise();
 
 
-        /* =====================================================
-           NEXT PHOTO
-        ===================================================== */
+        return;
 
-        function nextPhoto() {
+    }
+
+
+    showPhoto(next);
+
+    restartGallery();
+
+}
+
+
+/* =====================================================
+   PREVIOUS PHOTO
+===================================================== */
+
+function previousPhoto() {
+
+    let previous =
+        currentPhoto - 1;
+
+
+    if (
+        previous < 0
+    ) {
+
+        previous =
+            photos.length - 1;
+
+    }
+
+
+    showPhoto(previous);
+
+    restartGallery();
+
+}
+
+
+/* =====================================================
+   AUTOMATIC SLIDESHOW
+===================================================== */
+
+function startGallery() {
+
+    clearInterval(
+        galleryTimer
+    );
+
+
+    galleryTimer =
+        setInterval(() => {
+
 
             let next =
                 currentPhoto + 1;
 
-
-            /*
-               If this was the final photo,
-               go to the Final Surprise.
-            */
 
             if (
                 next >=
@@ -4113,129 +3536,158 @@
 
 
                 showFinalSurprise();
+
+
                 return;
+
             }
+
+
             showPhoto(next);
-            restartGallery();
-        }
-        function previousPhoto() {
-            let previous =
-                currentPhoto - 1;
-            if (
-                previous < 0
-            ) {
-                previous =
-                    photos.length - 1;
-            }
-        showPhoto(previous);
-            restartGallery();
-        }
-        function startGallery() {
-            clearInterval(
-                galleryTimer
-            );
-            galleryTimer =
-                setInterval(() => {
-                    let next =
-                        currentPhoto + 1;
-                    if (
-                        next >=
-                        photos.length
-                    ) {
-                        clearInterval(
-                            galleryTimer
-                        );
-                        showFinalSurprise();
-                        return;
-                    }
-                    showPhoto(next);
-                }, 6000);
-        }
-        function restartGallery() {
 
-            startGallery();
-        }
-        function showFinalSurprise() {
-            clearInterval(
-                galleryTimer
-            );
-            document
-                .getElementById("scene5")
-                .classList
-                .remove("active");
-            setTimeout(() => {
-                document
-                    .getElementById("scene6")
-                    .classList
-                    .add("active");
-            }, 1000);
-        }
-        function replayExperience() {
-            clearInterval(
-                galleryTimer
-            );
-            document
-                .querySelectorAll(".scene")
-                .forEach(scene => {
 
-                    scene.classList.remove(
-                        "active"
-                    );
+        }, 6000);
 
-                });
-            currentPhoto = 0;
-            photos.forEach(photo => {
-                photo.classList.remove(
-                    "active"
-                );
-            });
+}
 
-            photos[0].classList.add(
+
+function restartGallery() {
+
+    startGallery();
+
+}
+
+
+/* =====================================================
+   SCENE 5 → SCENE 6
+===================================================== */
+
+function showFinalSurprise() {
+
+    clearInterval(
+        galleryTimer
+    );
+
+
+    document
+        .getElementById("scene5")
+        .classList
+        .remove("active");
+
+
+    setTimeout(() => {
+
+        document
+            .getElementById("scene6")
+            .classList
+            .add("active");
+
+    }, 1000);
+
+}
+
+
+/* =====================================================
+   REPLAY
+===================================================== */
+
+function replayExperience() {
+
+    clearInterval(
+        galleryTimer
+    );
+
+
+    document
+        .querySelectorAll(".scene")
+        .forEach(scene => {
+
+            scene.classList.remove(
                 "active"
             );
 
-            document
-                .getElementById(
-                    "photoCounter"
-                )
-                .textContent =
-                "01 / 06";
-            document
-                .getElementById(
-                    "letterPaper"
-                )
-                .classList
-                .remove("show");
-            document
-                .getElementById(
-                    "envelopeArea"
-                )
-                .classList
-                .remove("open");
-            document
-                .getElementById(
-                    "letterMessage"
-                )
-                .innerHTML = "";
-            document
-                .getElementById(
-                    "letterSignature"
-                )
-                .innerHTML = "";
-            document
-                .getElementById(
-                    "letterContinue"
-                )
-                .style.display =
-                "none";
-            setTimeout(() => {
-                document
-                    .getElementById("scene1")
-                    .classList
-                    .add("active");
-                startMusic();
-            }, 800);
-        }
-    </script>
+        });
+
+
+    currentPhoto = 0;
+
+
+    photos.forEach(photo => {
+
+        photo.classList.remove(
+            "active"
+        );
+
+    });
+
+
+    photos[0].classList.add(
+        "active"
+    );
+
+
+    document
+        .getElementById(
+            "photoCounter"
+        )
+        .textContent =
+        "01 / 06";
+
+
+    document
+        .getElementById(
+            "letterPaper"
+        )
+        .classList
+        .remove("show");
+
+
+    document
+        .getElementById(
+            "envelopeArea"
+        )
+        .classList
+        .remove("open");
+
+
+    document
+        .getElementById(
+            "letterMessage"
+        )
+        .innerHTML = "";
+
+
+    document
+        .getElementById(
+            "letterSignature"
+        )
+        .innerHTML = "";
+
+
+    document
+        .getElementById(
+            "letterContinue"
+        )
+        .style.display =
+        "none";
+
+
+    setTimeout(() => {
+
+        document
+            .getElementById("scene1")
+            .classList
+            .add("active");
+
+
+        startMusic();
+
+    }, 800);
+
+}
+
+</script>
+
 </body>
+
 </html>
