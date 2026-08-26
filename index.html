@@ -1,0 +1,4241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>A Rakhi Story ❤️</title>
+
+    <style>
+
+        /* =====================================================
+           BASIC RESET
+        ===================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+
+            overflow: hidden;
+
+            background: #02030a;
+
+            color: white;
+
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+
+        }
+
+
+        /* =====================================================
+           SCENE SYSTEM
+        ===================================================== */
+
+        .scene {
+
+            position: absolute;
+
+            inset: 0;
+
+            width: 100%;
+            height: 100vh;
+
+            display: flex;
+
+            justify-content: center;
+            align-items: center;
+
+            opacity: 0;
+
+            visibility: hidden;
+
+            transition:
+                opacity 1.5s ease,
+                visibility 1.5s ease;
+
+        }
+
+        .scene.active {
+
+            opacity: 1;
+
+            visibility: visible;
+
+        }
+
+
+        /* =====================================================
+           MUSIC CONTROL
+        ===================================================== */
+
+        #musicControl {
+
+            position: fixed;
+
+            top: 20px;
+            right: 20px;
+
+            z-index: 9999;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            padding: 8px 12px;
+
+            border-radius: 40px;
+
+            background:
+                rgba(0, 0, 0, 0.45);
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.2);
+
+            backdrop-filter:
+                blur(12px);
+
+            box-shadow:
+                0 0 25px
+                rgba(255, 120, 170, 0.15);
+
+        }
+
+        #musicButton {
+
+            width: 42px;
+            height: 42px;
+
+            border-radius: 50%;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.35);
+
+            background:
+                rgba(255, 255, 255, 0.08);
+
+            color: white;
+
+            font-size: 18px;
+
+            cursor: pointer;
+
+            transition:
+                0.3s;
+
+        }
+
+        #musicButton:hover {
+
+            transform:
+                scale(1.1);
+
+            background:
+                rgba(255, 255, 255, 0.18);
+
+            box-shadow:
+                0 0 20px
+                rgba(255, 130, 180, 0.5);
+
+        }
+
+        #musicInfo {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+        }
+
+        #musicStatus {
+
+            font-size: 11px;
+
+            letter-spacing: 1px;
+
+            color: #eadce4;
+
+        }
+
+        #volumeSlider {
+
+            width: 70px;
+
+            cursor: pointer;
+
+        }
+
+        .music-playing {
+
+            animation:
+                musicPulse
+                1.5s infinite
+                ease-in-out;
+
+        }
+
+        @keyframes musicPulse {
+
+            0%,
+            100% {
+
+                box-shadow:
+                    0 0 5px
+                    rgba(255, 120, 180, 0.2);
+
+            }
+
+            50% {
+
+                box-shadow:
+                    0 0 25px
+                    rgba(255, 120, 180, 0.7);
+
+            }
+
+        }
+
+
+        /* =====================================================
+           SCENE 1
+        ===================================================== */
+
+        #scene1 {
+
+            background:
+
+                radial-gradient(
+                    circle at center,
+                    #17112b 0%,
+                    #080813 45%,
+                    #02030a 80%
+                );
+
+            overflow: hidden;
+
+        }
+
+        .stars {
+
+            position: absolute;
+
+            inset: 0;
+
+        }
+
+        .star {
+
+            position: absolute;
+
+            width: 2px;
+            height: 2px;
+
+            background: white;
+
+            border-radius: 50%;
+
+            box-shadow:
+                0 0 8px white;
+
+            animation:
+                twinkle 3s infinite ease-in-out;
+
+        }
+
+        @keyframes twinkle {
+
+            0%,
+            100% {
+
+                opacity: 0.2;
+
+                transform:
+                    scale(1);
+
+            }
+
+            50% {
+
+                opacity: 1;
+
+                transform:
+                    scale(2);
+
+            }
+
+        }
+
+
+        /* =====================================================
+           PARTICLES
+        ===================================================== */
+
+        .particle {
+
+            position: absolute;
+
+            width: 4px;
+            height: 4px;
+
+            border-radius: 50%;
+
+            background: #ffd6e7;
+
+            box-shadow:
+
+                0 0 10px #ffb6d5,
+
+                0 0 20px #ff7eb3;
+
+            animation:
+
+                floatParticle
+                8s linear infinite;
+
+            opacity: 0;
+
+        }
+
+        @keyframes floatParticle {
+
+            0% {
+
+                transform:
+                    translateY(100vh)
+                    scale(0);
+
+                opacity: 0;
+
+            }
+
+            20% {
+
+                opacity: 1;
+
+            }
+
+            80% {
+
+                opacity: 1;
+
+            }
+
+            100% {
+
+                transform:
+                    translateY(-20vh)
+                    scale(1.5);
+
+                opacity: 0;
+
+            }
+
+        }
+
+
+        /* =====================================================
+           INTRO
+        ===================================================== */
+
+        .intro-content {
+
+            position: relative;
+
+            z-index: 10;
+
+            text-align: center;
+
+            padding: 30px;
+
+            animation:
+                introAppear
+                3s ease forwards;
+
+        }
+
+        @keyframes introAppear {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    translateY(30px);
+
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    translateY(0);
+
+            }
+
+        }
+
+        .small-text {
+
+            font-size: 15px;
+
+            letter-spacing: 6px;
+
+            text-transform: uppercase;
+
+            color: #d9cfe7;
+
+            margin-bottom: 30px;
+
+        }
+
+        .main-text {
+
+            font-size:
+                clamp(
+                    35px,
+                    6vw,
+                    70px
+                );
+
+            line-height: 1.2;
+
+            font-weight: 400;
+
+            text-shadow:
+
+                0 0 10px
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.3
+                ),
+
+                0 0 30px
+                rgba(
+                    255,
+                    120,
+                    170,
+                    0.3
+                );
+
+        }
+
+        .second-text {
+
+            margin-top: 25px;
+
+            font-size:
+                clamp(
+                    18px,
+                    3vw,
+                    27px
+                );
+
+            font-style: italic;
+
+            color: #f4dce8;
+
+        }
+
+
+        /* =====================================================
+           BUTTONS
+        ===================================================== */
+
+        .start-button,
+        .continue-button,
+        .bond-button,
+        .letter-continue {
+
+            padding:
+                15px 35px;
+
+            border:
+
+                1px solid
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.4
+                );
+
+            border-radius: 50px;
+
+            background:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.05
+                );
+
+            color: white;
+
+            font-size: 14px;
+
+            letter-spacing: 3px;
+
+            cursor: pointer;
+
+            backdrop-filter:
+                blur(10px);
+
+            transition:
+                0.4s;
+
+        }
+
+        .start-button {
+
+            margin-top: 50px;
+
+        }
+
+        .continue-button {
+
+            margin-top: 50px;
+
+        }
+
+        .bond-button {
+
+            margin-top: 35px;
+
+        }
+
+        .start-button:hover,
+        .continue-button:hover,
+        .bond-button:hover {
+
+            transform:
+                scale(1.08);
+
+            background:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.15
+                );
+
+            box-shadow:
+
+                0 0 25px
+                rgba(
+                    255,
+                    150,
+                    200,
+                    0.5
+                );
+
+        }
+
+
+        /* =====================================================
+           VIGNETTE
+        ===================================================== */
+
+        .vignette {
+
+            position: absolute;
+
+            inset: 0;
+
+            pointer-events: none;
+
+            background:
+
+                radial-gradient(
+                    circle,
+                    transparent 35%,
+                    rgba(
+                        0,
+                        0,
+                        0,
+                        0.75
+                    ) 100%
+                );
+
+            z-index: 5;
+
+        }
+
+
+        /* =====================================================
+           SCENE 2 — RAKHI
+        ===================================================== */
+
+        #scene2 {
+
+            background:
+
+                radial-gradient(
+                    circle at center,
+                    #261326 0%,
+                    #0b0610 45%,
+                    #02030a 85%
+                );
+
+            flex-direction: column;
+
+            text-align: center;
+
+        }
+
+        .rakhi-container {
+
+            position: relative;
+
+            width: 320px;
+            height: 320px;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            margin-bottom: 35px;
+
+            animation:
+                rakhiAppear
+                2s ease forwards;
+
+        }
+
+        @keyframes rakhiAppear {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    scale(0.3)
+                    rotate(-15deg);
+
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    scale(1)
+                    rotate(0deg);
+
+            }
+
+        }
+
+        .rakhi-glow {
+
+            position: absolute;
+
+            width: 240px;
+            height: 240px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(
+                    255,
+                    130,
+                    180,
+                    0.08
+                );
+
+            box-shadow:
+
+                0 0 30px
+                rgba(
+                    255,
+                    130,
+                    180,
+                    0.4
+                ),
+
+                0 0 70px
+                rgba(
+                    255,
+                    100,
+                    180,
+                    0.3
+                );
+
+            animation:
+                pulseGlow
+                3s infinite
+                ease-in-out;
+
+        }
+
+        @keyframes pulseGlow {
+
+            0%,
+            100% {
+
+                transform:
+                    scale(0.9);
+
+                opacity: 0.6;
+
+            }
+
+            50% {
+
+                transform:
+                    scale(1.1);
+
+                opacity: 1;
+
+            }
+
+        }
+
+        .thread-left,
+        .thread-right {
+
+            position: absolute;
+
+            width: 100px;
+
+            height: 12px;
+
+            background:
+
+                repeating-linear-gradient(
+                    45deg,
+                    #d94f70 0px,
+                    #d94f70 8px,
+                    #ffd1dc 8px,
+                    #ffd1dc 14px
+                );
+
+            border-radius: 20px;
+
+        }
+
+        .thread-left {
+
+            left: 15px;
+
+            transform:
+                rotate(-12deg);
+
+        }
+
+        .thread-right {
+
+            right: 15px;
+
+            transform:
+                rotate(12deg);
+
+        }
+
+        .rakhi-center {
+
+            position: relative;
+
+            width: 145px;
+            height: 145px;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            background:
+
+                radial-gradient(
+                    circle,
+                    #fff0f5 0%,
+                    #ffc1d5 20%,
+                    #e85d86 45%,
+                    #8f2049 70%,
+                    #4a102c 100%
+                );
+
+            border:
+                8px solid #f8b7cb;
+
+            box-shadow:
+
+                0 0 15px #ff9cbd,
+
+                0 0 35px #ff5d98,
+
+                0 0 70px
+                rgba(
+                    255,
+                    70,
+                    150,
+                    0.5
+                );
+
+            animation:
+                rotateRakhi
+                12s linear infinite;
+
+        }
+
+        @keyframes rotateRakhi {
+
+            from {
+
+                transform:
+                    rotate(0deg);
+
+            }
+
+            to {
+
+                transform:
+                    rotate(360deg);
+
+            }
+
+        }
+
+        .rakhi-center::before {
+
+            content: "✦";
+
+            position: absolute;
+
+            font-size: 70px;
+
+            color: #fff5f8;
+
+            text-shadow:
+                0 0 10px white,
+                0 0 25px #ff75a8;
+
+        }
+
+        .rakhi-center::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 65px;
+            height: 65px;
+
+            border:
+                3px solid
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.6
+                );
+
+            border-radius: 50%;
+
+        }
+
+        .reveal-title {
+
+            font-size:
+                clamp(
+                    28px,
+                    5vw,
+                    55px
+                );
+
+            font-weight: 400;
+
+            opacity: 0;
+
+            animation:
+                textReveal
+                2s ease forwards;
+
+            animation-delay:
+                1.5s;
+
+        }
+
+        .reveal-subtitle {
+
+            margin-top: 18px;
+
+            font-size:
+                clamp(
+                    17px,
+                    2.5vw,
+                    24px
+                );
+
+            color: #f5dce6;
+
+            font-style: italic;
+
+            opacity: 0;
+
+            animation:
+                textReveal
+                2s ease forwards;
+
+            animation-delay:
+                3s;
+
+        }
+
+        @keyframes textReveal {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    translateY(20px);
+
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    translateY(0);
+
+            }
+
+        }
+
+
+        /* =====================================================
+           SCENE 3 — BOND
+        ===================================================== */
+
+        #scene3 {
+
+            background:
+
+                radial-gradient(
+                    circle at center,
+                    #211021 0%,
+                    #0c0610 45%,
+                    #02030a 85%
+                );
+
+            text-align: center;
+
+        }
+
+        .bond-glow {
+
+            position: absolute;
+
+            width: 450px;
+            height: 450px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(
+                    255,
+                    70,
+                    130,
+                    0.08
+                );
+
+            box-shadow:
+                0 0 80px
+                rgba(
+                    255,
+                    80,
+                    150,
+                    0.15
+                );
+
+            animation:
+                bondGlow
+                4s infinite
+                ease-in-out;
+
+        }
+
+        @keyframes bondGlow {
+
+            0%,
+            100% {
+
+                transform:
+                    scale(0.9);
+
+            }
+
+            50% {
+
+                transform:
+                    scale(1.15);
+
+            }
+
+        }
+
+        .bond-heart {
+
+            position: absolute;
+
+            font-size: 110px;
+
+            opacity: 0.12;
+
+            animation:
+                heartFloat
+                5s infinite
+                ease-in-out;
+
+        }
+
+        @keyframes heartFloat {
+
+            0%,
+            100% {
+
+                transform:
+                    translateY(0)
+                    scale(1);
+
+            }
+
+            50% {
+
+                transform:
+                    translateY(-20px)
+                    scale(1.08);
+
+            }
+
+        }
+
+        .bond-content {
+
+            position: relative;
+
+            z-index: 10;
+
+            width:
+                min(
+                    900px,
+                    90%
+                );
+
+            text-align: center;
+
+        }
+
+        .bond-small {
+
+            font-size: 13px;
+
+            letter-spacing: 7px;
+
+            color: #d8bfd0;
+
+            margin-bottom: 25px;
+
+        }
+
+        .bond-title {
+
+            font-size:
+                clamp(
+                    30px,
+                    5vw,
+                    55px
+                );
+
+            font-weight: 400;
+
+            line-height: 1.2;
+
+            margin-bottom: 35px;
+
+        }
+
+        .bond-lines p {
+
+            font-size:
+                clamp(
+                    16px,
+                    2.2vw,
+                    21px
+                );
+
+            color: #eadbe2;
+
+            font-style: italic;
+
+            line-height: 1.7;
+
+            margin: 8px 0;
+
+        }
+
+        .bond-lines .special-line {
+
+            margin-top: 22px;
+
+            font-size:
+                clamp(
+                    18px,
+                    2.5vw,
+                    25px
+                );
+
+            color: #ffd6e4;
+
+            font-style: normal;
+
+        }
+
+
+        /* =====================================================
+           SCENE 4 — LETTER
+        ===================================================== */
+
+        #scene4 {
+
+            background:
+
+                radial-gradient(
+                    circle at center,
+                    #251321 0%,
+                    #0c0610 45%,
+                    #02030a 90%
+                );
+
+            overflow: hidden;
+
+        }
+
+        .letter-intro {
+
+            position: absolute;
+
+            top: 8%;
+
+            font-size: 14px;
+
+            letter-spacing: 6px;
+
+            color: #d8c4cf;
+
+        }
+
+        .envelope-area {
+
+            position: relative;
+
+            width: 340px;
+
+            height: 230px;
+
+            cursor: pointer;
+
+            transition:
+                transform 0.5s ease;
+
+        }
+
+        .envelope-area:hover {
+
+            transform:
+                scale(1.04);
+
+        }
+
+        .envelope-glow {
+
+            position: absolute;
+
+            width: 330px;
+
+            height: 180px;
+
+            left: 5px;
+
+            top: 25px;
+
+            border-radius: 20px;
+
+            background:
+                rgba(
+                    255,
+                    100,
+                    160,
+                    0.08
+                );
+
+            box-shadow:
+
+                0 0 40px
+                rgba(
+                    255,
+                    100,
+                    160,
+                    0.35
+                );
+
+            animation:
+                envelopeGlow
+                3s infinite
+                ease-in-out;
+
+        }
+
+        @keyframes envelopeGlow {
+
+            0%,
+            100% {
+
+                transform:
+                    scale(0.95);
+
+            }
+
+            50% {
+
+                transform:
+                    scale(1.05);
+
+            }
+
+        }
+
+        .envelope {
+
+            position: absolute;
+
+            width: 320px;
+
+            height: 190px;
+
+            left: 10px;
+
+            top: 40px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #8d3155,
+                    #52152f
+                );
+
+            border-radius: 8px;
+
+        }
+
+        .envelope::before {
+
+            content: "";
+
+            position: absolute;
+
+            left: 0;
+
+            bottom: 0;
+
+            border-left:
+                160px solid
+                #a74367;
+
+            border-top:
+                95px solid
+                transparent;
+
+        }
+
+        .envelope::after {
+
+            content: "";
+
+            position: absolute;
+
+            right: 0;
+
+            bottom: 0;
+
+            border-right:
+                160px solid
+                #742442;
+
+            border-top:
+                95px solid
+                transparent;
+
+        }
+
+        .envelope-flap {
+
+            position: absolute;
+
+            z-index: 5;
+
+            top: 0;
+
+            left: 0;
+
+            border-left:
+                160px solid
+                transparent;
+
+            border-right:
+                160px solid
+                transparent;
+
+            border-top:
+                100px solid
+                #b64a70;
+
+            transform-origin:
+                top center;
+
+            transition:
+                transform 1.2s;
+
+        }
+
+        .seal {
+
+            position: absolute;
+
+            z-index: 10;
+
+            left: 50%;
+
+            top: 85px;
+
+            transform:
+                translateX(-50%);
+
+            width: 48px;
+
+            height: 48px;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            background:
+                radial-gradient(
+                    circle,
+                    #ffd6e4,
+                    #df6b91
+                );
+
+            color: #7c2347;
+
+            font-size: 22px;
+
+            transition:
+                opacity 0.4s;
+
+        }
+
+        .open-text {
+
+            position: absolute;
+
+            bottom: -35px;
+
+            width: 100%;
+
+            font-size: 14px;
+
+            letter-spacing: 2px;
+
+            color: #ead6df;
+
+        }
+
+        .envelope-area.open
+        .envelope-flap {
+
+            transform:
+                rotateX(180deg);
+
+        }
+
+        .envelope-area.open
+        .seal {
+
+            opacity: 0;
+
+        }
+
+        .envelope-area.open
+        .open-text {
+
+            opacity: 0;
+
+        }
+
+
+        /* =====================================================
+           LETTER PAPER
+        ===================================================== */
+
+        .letter-paper {
+
+            position: absolute;
+
+            z-index: 20;
+
+            width:
+                min(
+                    500px,
+                    88vw
+                );
+
+            max-height:
+                75vh;
+
+            overflow-y: auto;
+
+            padding:
+                45px 40px;
+
+            left: 50%;
+
+            top: 50%;
+
+            transform:
+                translate(
+                    -50%,
+                    100%
+                )
+                scale(0.7);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #fff9f3,
+                    #f5e5d9
+                );
+
+            color: #4d2938;
+
+            border-radius: 5px;
+
+            box-shadow:
+                0 25px 80px
+                rgba(
+                    0,
+                    0,
+                    0,
+                    0.7
+                );
+
+            opacity: 0;
+
+            visibility: hidden;
+
+            transition:
+                transform 1.5s,
+                opacity 1s;
+
+        }
+
+        .letter-paper.show {
+
+            opacity: 1;
+
+            visibility: visible;
+
+            transform:
+                translate(
+                    -50%,
+                    -50%
+                )
+                scale(1);
+
+        }
+
+        .paper-decoration {
+
+            font-size: 30px;
+
+            margin-bottom: 15px;
+
+        }
+
+        .letter-title {
+
+            font-size: 32px;
+
+            font-weight: 400;
+
+            margin-bottom: 25px;
+
+            color: #7e294d;
+
+        }
+
+        .letter-message {
+
+            font-family:
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            font-size: 17px;
+
+            line-height: 1.9;
+
+            text-align: left;
+
+        }
+
+        .letter-message p {
+
+            margin-bottom: 15px;
+
+        }
+
+        .letter-signature {
+
+            margin-top: 25px;
+
+            font-size: 20px;
+
+            font-style: italic;
+
+            color: #8a3152;
+
+            text-align: right;
+
+        }
+
+        .letter-continue {
+
+            margin-top: 25px;
+
+            padding:
+                12px 25px;
+
+            background:
+                #8d3155;
+
+            border: none;
+
+            letter-spacing: 2px;
+
+            display: none;
+
+        }
+
+
+        /* =====================================================
+           SCENE 5 — MEMORY GALLERY
+        ===================================================== */
+
+        #scene5 {
+
+            background: #02030a;
+
+            flex-direction: column;
+
+            overflow: hidden;
+
+        }
+
+        .gallery-background {
+
+            position: absolute;
+
+            inset: 0;
+
+            background:
+                radial-gradient(
+                    circle at center,
+                    #24121e,
+                    #08050a 55%,
+                    #010208
+                );
+
+        }
+
+        .gallery-title {
+
+            position: absolute;
+
+            top: 8%;
+
+            z-index: 10;
+
+            text-align: center;
+
+        }
+
+        .gallery-small {
+
+            font-size: 12px;
+
+            letter-spacing: 6px;
+
+            color: #cdbbc5;
+
+            margin-bottom: 15px;
+
+        }
+
+        .gallery-main {
+
+            font-size:
+                clamp(
+                    30px,
+                    5vw,
+                    55px
+                );
+
+            font-weight: 400;
+
+            text-shadow:
+                0 0 20px
+                rgba(
+                    255,
+                    120,
+                    170,
+                    0.4
+                );
+
+        }
+
+
+        /* =====================================================
+           PHOTO STAGE
+        ===================================================== */
+
+        .photo-stage {
+
+            position: relative;
+
+            z-index: 5;
+
+            width:
+                min(
+                    650px,
+                    88vw
+                );
+
+            height:
+                min(
+                    65vh,
+                    600px
+                );
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+        }
+
+        .memory-card {
+
+            position: absolute;
+
+            width: 100%;
+
+            height: 100%;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            opacity: 0;
+
+            transform:
+                scale(0.92);
+
+            transition:
+                opacity 1s ease,
+                transform 1.3s ease;
+
+            pointer-events: none;
+
+        }
+
+        .memory-card.active {
+
+            opacity: 1;
+
+            transform:
+                scale(1);
+
+        }
+
+        .memory-photo {
+
+            width: 100%;
+
+            height: 100%;
+
+            object-fit: contain;
+
+            border-radius: 12px;
+
+            filter:
+                brightness(0.85);
+
+            box-shadow:
+
+                0 20px 70px
+                rgba(
+                    0,
+                    0,
+                    0,
+                    0.8
+                ),
+
+                0 0 40px
+                rgba(
+                    255,
+                    100,
+                    160,
+                    0.15
+                );
+
+            animation:
+                photoZoom
+                6s ease-in-out
+                infinite alternate;
+
+        }
+
+        @keyframes photoZoom {
+
+            from {
+
+                transform:
+                    scale(1);
+
+            }
+
+            to {
+
+                transform:
+                    scale(1.05);
+
+            }
+
+        }
+
+
+        /* =====================================================
+           PHOTO CAPTION
+        ===================================================== */
+
+        .photo-caption {
+
+            position: absolute;
+
+            bottom: 25px;
+
+            left: 50%;
+
+            transform:
+                translateX(-50%);
+
+            width: 90%;
+
+            text-align: center;
+
+            padding:
+                12px 20px;
+
+            background:
+                rgba(
+                    0,
+                    0,
+                    0,
+                    0.5
+                );
+
+            border-radius: 30px;
+
+            backdrop-filter:
+                blur(8px);
+
+            font-size: 16px;
+
+            color: #fff0f5;
+
+            letter-spacing: 1px;
+
+        }
+
+
+        /* =====================================================
+           GALLERY CONTROLS
+        ===================================================== */
+
+        .gallery-controls {
+
+            position: absolute;
+
+            bottom: 8%;
+
+            z-index: 20;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 20px;
+
+        }
+
+        .gallery-button {
+
+            width: 48px;
+
+            height: 48px;
+
+            border-radius: 50%;
+
+            border:
+                1px solid
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.3
+                );
+
+            background:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.06
+                );
+
+            color: white;
+
+            font-size: 20px;
+
+            cursor: pointer;
+
+            transition:
+                0.3s;
+
+            backdrop-filter:
+                blur(8px);
+
+        }
+
+        .gallery-button:hover {
+
+            transform:
+                scale(1.12);
+
+            background:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.15
+                );
+
+        }
+
+        .photo-counter {
+
+            font-size: 13px;
+
+            letter-spacing: 3px;
+
+            color: #d9cbd2;
+
+        }
+
+
+        /* =====================================================
+           FLOATING HEARTS
+        ===================================================== */
+
+        .gallery-heart {
+
+            position: absolute;
+
+            z-index: 3;
+
+            font-size: 18px;
+
+            opacity: 0;
+
+            animation:
+                galleryHeart
+                7s linear infinite;
+
+        }
+
+        @keyframes galleryHeart {
+
+            0% {
+
+                transform:
+                    translateY(100vh)
+                    scale(0.5);
+
+                opacity: 0;
+
+            }
+
+            20% {
+
+                opacity: 0.7;
+
+            }
+
+            80% {
+
+                opacity: 0.7;
+
+            }
+
+            100% {
+
+                transform:
+                    translateY(-20vh)
+                    scale(1.3);
+
+                opacity: 0;
+
+            }
+
+        }
+
+
+        /* =====================================================
+           SCENE 6 — FINAL SURPRISE
+        ===================================================== */
+
+        .final-scene {
+
+            background:
+
+                radial-gradient(
+                    circle at center,
+                    #321329 0%,
+                    #120812 40%,
+                    #030207 85%
+                );
+
+            overflow: hidden;
+
+            text-align: center;
+
+        }
+
+        .final-background {
+
+            position: absolute;
+
+            inset: 0;
+
+            background:
+
+                radial-gradient(
+                    circle at center,
+                    rgba(
+                        255,
+                        100,
+                        160,
+                        0.12
+                    ),
+                    transparent 45%
+                );
+
+            animation:
+
+                finalBackground
+                5s infinite
+                ease-in-out;
+
+        }
+
+        @keyframes finalBackground {
+
+            0%,
+            100% {
+
+                transform:
+                    scale(0.95);
+
+                opacity: 0.7;
+
+            }
+
+            50% {
+
+                transform:
+                    scale(1.1);
+
+                opacity: 1;
+
+            }
+
+        }
+
+
+        /* =====================================================
+           FINAL CONTENT
+        ===================================================== */
+
+        .final-content {
+
+            position: relative;
+
+            z-index: 20;
+
+            width:
+                min(
+                    900px,
+                    90%
+                );
+
+            text-align: center;
+
+            animation:
+
+                finalAppear
+                3s ease
+                forwards;
+
+        }
+
+        @keyframes finalAppear {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    translateY(40px)
+                    scale(0.95);
+
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    translateY(0)
+                    scale(1);
+
+            }
+
+        }
+
+
+        /* =====================================================
+           FINAL RAKHI
+        ===================================================== */
+
+        .final-rakhi {
+
+            font-size: 65px;
+
+            margin-bottom: 25px;
+
+            animation:
+
+                finalRakhi
+                3s infinite
+                ease-in-out;
+
+            filter:
+
+                drop-shadow(
+                    0 0 20px
+                    rgba(
+                        255,
+                        120,
+                        180,
+                        0.8
+                    )
+                );
+
+        }
+
+        @keyframes finalRakhi {
+
+            0%,
+            100% {
+
+                transform:
+                    scale(1)
+                    rotate(-5deg);
+
+            }
+
+            50% {
+
+                transform:
+                    scale(1.15)
+                    rotate(5deg);
+
+            }
+
+        }
+
+
+        /* =====================================================
+           FINAL TEXT
+        ===================================================== */
+
+        .final-small {
+
+            font-size: 12px;
+
+            letter-spacing: 7px;
+
+            color: #d8bdca;
+
+            margin-bottom: 25px;
+
+        }
+
+        .final-title {
+
+            font-size:
+                clamp(
+                    30px,
+                    5vw,
+                    58px
+                );
+
+            font-weight: 400;
+
+            line-height: 1.2;
+
+            color: #fff5f8;
+
+            text-shadow:
+
+                0 0 15px
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.2
+                ),
+
+                0 0 35px
+                rgba(
+                    255,
+                    100,
+                    170,
+                    0.4
+                );
+
+        }
+
+        .final-message {
+
+            margin-top: 25px;
+
+            font-size:
+                clamp(
+                    21px,
+                    3vw,
+                    32px
+                );
+
+            color: #ffd9e7;
+
+            font-style: italic;
+
+            text-shadow:
+
+                0 0 20px
+                rgba(
+                    255,
+                    100,
+                    170,
+                    0.5
+                );
+
+        }
+
+        .final-line {
+
+            width: 100px;
+
+            height: 1px;
+
+            margin:
+                30px auto;
+
+            background:
+
+                rgba(
+                    255,
+                    200,
+                    220,
+                    0.5
+                );
+
+            box-shadow:
+
+                0 0 10px
+                rgba(
+                    255,
+                    120,
+                    170,
+                    0.5
+                );
+
+        }
+
+        .final-wish {
+
+            font-size:
+                clamp(
+                    27px,
+                    4vw,
+                    45px
+                );
+
+            color: #fff;
+
+            margin-bottom: 10px;
+
+        }
+
+        .final-sister {
+
+            font-size: 17px;
+
+            color: #dbc9d2;
+
+            font-style: italic;
+
+        }
+
+        .final-signature {
+
+            margin-top: 20px;
+
+            font-size: 20px;
+
+            color: #ffd3e2;
+
+            font-style: italic;
+
+        }
+
+
+        /* =====================================================
+           REPLAY BUTTON
+        ===================================================== */
+
+        .replay-button {
+
+            margin-top: 35px;
+
+            padding:
+                13px 28px;
+
+            border:
+                1px solid
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.3
+                );
+
+            border-radius: 50px;
+
+            background:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.05
+                );
+
+            color: white;
+
+            font-size: 12px;
+
+            letter-spacing: 3px;
+
+            cursor: pointer;
+
+            transition:
+                0.4s;
+
+            backdrop-filter:
+                blur(10px);
+
+        }
+
+        .replay-button:hover {
+
+            transform:
+                scale(1.08);
+
+            background:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.15
+                );
+
+            box-shadow:
+
+                0 0 25px
+                rgba(
+                    255,
+                    120,
+                    180,
+                    0.5
+                );
+
+        }
+
+
+        /* =====================================================
+           FINAL FLOATING HEARTS
+        ===================================================== */
+
+        .final-hearts span {
+
+            position: absolute;
+
+            bottom: -50px;
+
+            font-size: 20px;
+
+            opacity: 0;
+
+            animation:
+
+                finalHeartFloat
+                9s linear
+                infinite;
+
+        }
+
+        @keyframes finalHeartFloat {
+
+            0% {
+
+                transform:
+                    translateY(0)
+                    scale(0.5)
+                    rotate(0deg);
+
+                opacity: 0;
+
+            }
+
+            15% {
+
+                opacity: 0.7;
+
+            }
+
+            80% {
+
+                opacity: 0.7;
+
+            }
+
+            100% {
+
+                transform:
+                    translateY(-110vh)
+                    scale(1.3)
+                    rotate(20deg);
+
+                opacity: 0;
+
+            }
+
+        }
+
+
+        /* =====================================================
+           FIREWORKS
+        ===================================================== */
+
+        .firework {
+
+            position: absolute;
+
+            width: 5px;
+
+            height: 5px;
+
+            border-radius: 50%;
+
+            opacity: 0;
+
+            animation:
+
+                fireworkAppear
+                4s infinite
+                ease-out;
+
+        }
+
+        .firework-one {
+
+            top: 25%;
+
+            left: 20%;
+
+        }
+
+        .firework-two {
+
+            top: 30%;
+
+            right: 20%;
+
+            animation-delay: 1.5s;
+
+        }
+
+        .firework-three {
+
+            top: 65%;
+
+            left: 75%;
+
+            animation-delay: 3s;
+
+        }
+
+        .firework span {
+
+            position: absolute;
+
+            left: 0;
+
+            top: 0;
+
+            width: 3px;
+
+            height: 60px;
+
+            transform-origin:
+                center bottom;
+
+            border-radius: 5px;
+
+            background:
+                rgba(
+                    255,
+                    190,
+                    220,
+                    0.8
+                );
+
+            box-shadow:
+
+                0 0 10px
+                rgba(
+                    255,
+                    100,
+                    180,
+                    0.8
+                );
+
+        }
+
+        .firework span:nth-child(1) {
+
+            transform:
+                rotate(0deg)
+                translateY(-35px);
+
+        }
+
+        .firework span:nth-child(2) {
+
+            transform:
+                rotate(45deg)
+                translateY(-35px);
+
+        }
+
+        .firework span:nth-child(3) {
+
+            transform:
+                rotate(90deg)
+                translateY(-35px);
+
+        }
+
+        .firework span:nth-child(4) {
+
+            transform:
+                rotate(135deg)
+                translateY(-35px);
+
+        }
+
+        .firework span:nth-child(5) {
+
+            transform:
+                rotate(180deg)
+                translateY(-35px);
+
+        }
+
+        .firework span:nth-child(6) {
+
+            transform:
+                rotate(225deg)
+                translateY(-35px);
+
+        }
+
+        .firework span:nth-child(7) {
+
+            transform:
+                rotate(270deg)
+                translateY(-35px);
+
+        }
+
+        .firework span:nth-child(8) {
+
+            transform:
+                rotate(315deg)
+                translateY(-35px);
+
+        }
+
+        @keyframes fireworkAppear {
+
+            0% {
+
+                transform:
+                    scale(0.1);
+
+                opacity: 0;
+
+            }
+
+            15% {
+
+                opacity: 1;
+
+                transform:
+                    scale(0.5);
+
+            }
+
+            45% {
+
+                opacity: 0.9;
+
+                transform:
+                    scale(1);
+
+            }
+
+            70% {
+
+                opacity: 0.4;
+
+            }
+
+            100% {
+
+                opacity: 0;
+
+                transform:
+                    scale(1.3);
+
+            }
+
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 600px) {
+
+            .small-text {
+
+                font-size: 11px;
+
+                letter-spacing: 3px;
+
+            }
+
+            .main-text {
+
+                font-size: 35px;
+
+            }
+
+            .rakhi-container {
+
+                transform:
+                    scale(0.8);
+
+                margin-bottom: 10px;
+
+            }
+
+            .bond-title {
+
+                font-size: 30px;
+
+            }
+
+            .bond-lines p {
+
+                font-size: 16px;
+
+            }
+
+            .envelope-area {
+
+                transform:
+                    scale(0.8);
+
+            }
+
+            .letter-paper {
+
+                padding:
+                    30px 25px;
+
+                max-height:
+                    80vh;
+
+            }
+
+            .letter-title {
+
+                font-size: 27px;
+
+            }
+
+            .letter-message {
+
+                font-size: 15px;
+
+            }
+
+            .gallery-main {
+
+                font-size: 30px;
+
+            }
+
+            .photo-stage {
+
+                width: 90vw;
+
+                height: 55vh;
+
+            }
+
+            .photo-caption {
+
+                font-size: 14px;
+
+                bottom: 15px;
+
+            }
+
+            #musicControl {
+
+                top: 12px;
+
+                right: 12px;
+
+                padding: 6px;
+
+            }
+
+            #musicInfo {
+
+                display: none;
+
+            }
+
+            #musicButton {
+
+                width: 40px;
+
+                height: 40px;
+
+            }
+
+            .final-content {
+
+                width: 90%;
+
+            }
+
+            .final-rakhi {
+
+                font-size: 50px;
+
+            }
+
+            .final-small {
+
+                font-size: 9px;
+
+                letter-spacing: 4px;
+
+            }
+
+            .final-title {
+
+                font-size: 30px;
+
+            }
+
+            .final-message {
+
+                font-size: 20px;
+
+            }
+
+            .final-wish {
+
+                font-size: 29px;
+
+            }
+
+            .final-sister {
+
+                font-size: 15px;
+
+            }
+
+            .final-signature {
+
+                font-size: 18px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         BACKGROUND MUSIC
+    ====================================================== -->
+
+    <audio
+        id="bgMusic"
+        loop
+        preload="auto">
+
+        <source
+            src="music/rakhi.mp3"
+            type="audio/mpeg">
+
+    </audio>
+
+
+    <!-- =====================================================
+         MUSIC CONTROL
+    ====================================================== -->
+
+    <div id="musicControl">
+
+        <button
+            id="musicButton"
+            onclick="toggleMusic()">
+
+            🎵
+
+        </button>
+
+        <div id="musicInfo">
+
+            <span id="musicStatus">
+
+                Music Off
+
+            </span>
+
+            <input
+                id="volumeSlider"
+                type="range"
+                min="0"
+                max="1"
+                step="0.01"
+                value="0.5"
+                onchange="changeVolume(this.value)"
+            >
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         SCENE 1 — INTRO
+    ====================================================== -->
+
+    <section
+        id="scene1"
+        class="scene active">
+
+
+        <div class="stars">
+
+            <span
+                class="star"
+                style="top:10%;left:15%;">
+            </span>
+
+            <span
+                class="star"
+                style="top:20%;left:70%;animation-delay:1s;">
+            </span>
+
+            <span
+                class="star"
+                style="top:35%;left:30%;animation-delay:2s;">
+            </span>
+
+            <span
+                class="star"
+                style="top:15%;left:90%;animation-delay:1.5s;">
+            </span>
+
+            <span
+                class="star"
+                style="top:60%;left:10%;animation-delay:.5s;">
+            </span>
+
+            <span
+                class="star"
+                style="top:75%;left:80%;animation-delay:2.5s;">
+            </span>
+
+            <span
+                class="star"
+                style="top:85%;left:40%;animation-delay:1.2s;">
+            </span>
+
+        </div>
+
+
+        <span
+            class="particle"
+            style="left:10%;animation-delay:1s;">
+        </span>
+
+        <span
+            class="particle"
+            style="left:30%;animation-delay:3s;">
+        </span>
+
+        <span
+            class="particle"
+            style="left:50%;animation-delay:2s;">
+        </span>
+
+        <span
+            class="particle"
+            style="left:70%;animation-delay:5s;">
+        </span>
+
+        <span
+            class="particle"
+            style="left:90%;animation-delay:4s;">
+        </span>
+
+
+        <div class="intro-content">
+
+            <div class="small-text">
+
+                A Little Story For Someone Special
+
+            </div>
+
+
+            <div class="main-text">
+
+                Some bonds are written<br>
+
+                by destiny...
+
+            </div>
+
+
+            <div class="second-text">
+
+                And some are simply a beautiful gift. ❤️
+
+            </div>
+
+
+            <button
+                class="start-button"
+                onclick="showRakhi()">
+
+                BEGIN THE JOURNEY ✨
+
+            </button>
+
+        </div>
+
+
+        <div class="vignette"></div>
+
+    </section>
+
+
+    <!-- =====================================================
+         SCENE 2 — RAKHI
+    ====================================================== -->
+
+    <section
+        id="scene2"
+        class="scene">
+
+
+        <div class="rakhi-container">
+
+            <div class="rakhi-glow"></div>
+
+            <div class="thread-left"></div>
+
+            <div class="thread-right"></div>
+
+            <div class="rakhi-center"></div>
+
+        </div>
+
+
+        <h1 class="reveal-title">
+
+            A Bond Beyond Words ❤️
+
+        </h1>
+
+
+        <p class="reveal-subtitle">
+
+            A little thread... carrying a lifetime of love.
+
+        </p>
+
+
+        <button
+            class="continue-button"
+            onclick="nextScene()">
+
+            CONTINUE ✨
+
+        </button>
+
+
+        <div class="vignette"></div>
+
+    </section>
+
+
+    <!-- =====================================================
+         SCENE 3 — BOND
+    ====================================================== -->
+
+    <section
+        id="scene3"
+        class="scene">
+
+
+        <div class="bond-glow"></div>
+
+
+        <div class="bond-heart">
+
+            ❤️
+
+        </div>
+
+
+        <div class="bond-content">
+
+
+            <div class="bond-small">
+
+                OUR STORY
+
+            </div>
+
+
+            <h1 class="bond-title">
+
+                It's More Than Just Being Siblings
+
+            </h1>
+
+
+            <div class="bond-lines">
+
+
+                <p>
+
+                    We have shared laughter...
+
+                </p>
+
+
+                <p>
+
+                    We have shared countless memories...
+
+                </p>
+
+
+                <p>
+
+                    We have annoyed each other more times than we can count... 😂
+
+                </p>
+
+
+                <p>
+
+                    But through everything...
+
+                </p>
+
+
+                <p class="special-line">
+
+                    You have always been someone special in my life. ❤️
+
+                </p>
+
+
+            </div>
+
+
+            <button
+                class="bond-button"
+                onclick="showLetter()">
+
+                THERE'S SOMETHING I WANT TO TELL YOU 💌
+
+            </button>
+
+
+        </div>
+
+
+        <div class="vignette"></div>
+
+    </section>
+
+
+    <!-- =====================================================
+         SCENE 4 — LETTER
+    ====================================================== -->
+
+    <section
+        id="scene4"
+        class="scene">
+
+
+        <div class="letter-intro">
+
+            A MESSAGE FROM YOUR BROTHER ❤️
+
+        </div>
+
+
+        <div
+            id="envelopeArea"
+            class="envelope-area"
+            onclick="openLetter()">
+
+
+            <div class="envelope-glow"></div>
+
+
+            <div class="envelope">
+
+
+                <div class="envelope-flap"></div>
+
+
+                <div class="seal">
+
+                    ❤️
+
+                </div>
+
+
+            </div>
+
+
+            <div class="open-text">
+
+                CLICK THE LETTER TO OPEN 💌
+
+            </div>
+
+
+        </div>
+
+
+        <div
+            id="letterPaper"
+            class="letter-paper">
+
+
+            <div class="paper-decoration">
+
+                🎀 ❤️ 🎀
+
+            </div>
+
+
+            <h2 class="letter-title">
+
+                To My Beautiful Sister
+
+            </h2>
+
+
+            <div
+                id="letterMessage"
+                class="letter-message">
+            </div>
+
+
+            <div
+                id="letterSignature"
+                class="letter-signature">
+            </div>
+
+
+            <button
+                id="letterContinue"
+                class="letter-continue"
+                onclick="continueFromLetter(event)">
+
+                LOOK AT OUR MEMORIES 📸
+
+            </button>
+
+
+        </div>
+
+
+        <div class="vignette"></div>
+
+    </section>
+
+
+    <!-- =====================================================
+         SCENE 5 — MEMORIES
+    ====================================================== -->
+
+    <section
+        id="scene5"
+        class="scene">
+
+
+        <div class="gallery-background"></div>
+
+
+        <div class="gallery-title">
+
+
+            <div class="gallery-small">
+
+                A FEW MOMENTS
+
+            </div>
+
+
+            <h1 class="gallery-main">
+
+                Memories We Made ❤️
+
+            </h1>
+
+
+        </div>
+
+
+        <div
+            id="photoStage"
+            class="photo-stage">
+
+
+            <!-- PHOTO 1 -->
+
+            <div
+                class="memory-card active">
+
+                <img
+                    class="memory-photo"
+                    src="photos/photo1.jpg"
+                    alt="Memory 1">
+
+                <div class="photo-caption">
+
+                    One of those moments I'll always remember. ❤️
+
+                </div>
+
+            </div>
+
+
+            <!-- PHOTO 2 -->
+
+            <div
+                class="memory-card">
+
+                <img
+                    class="memory-photo"
+                    src="photos/photo2.jpg"
+                    alt="Memory 2">
+
+                <div class="photo-caption">
+
+                    Some memories never get old. ✨
+
+                </div>
+
+            </div>
+
+
+            <!-- PHOTO 3 -->
+
+            <div
+                class="memory-card">
+
+                <img
+                    class="memory-photo"
+                    src="photos/photo3.jpg"
+                    alt="Memory 3">
+
+                <div class="photo-caption">
+
+                    Happiness looks a lot like this. ❤️
+
+                </div>
+
+            </div>
+
+
+            <!-- PHOTO 4 -->
+
+            <div
+                class="memory-card">
+
+                <img
+                    class="memory-photo"
+                    src="photos/photo4.jpg"
+                    alt="Memory 4">
+
+                <div class="photo-caption">
+
+                    A memory worth keeping forever. 🌸
+
+                </div>
+
+            </div>
+
+
+            <!-- PHOTO 5 -->
+
+            <div
+                class="memory-card">
+
+                <img
+                    class="memory-photo"
+                    src="photos/photo5.jpg"
+                    alt="Memory 5">
+
+                <div class="photo-caption">
+
+                    Through every chapter... ❤️
+
+                </div>
+
+            </div>
+
+
+            <!-- PHOTO 6 -->
+
+            <div
+                class="memory-card">
+
+                <img
+                    class="memory-photo"
+                    src="photos/photo6.jpg"
+                    alt="Memory 6">
+
+                <div class="photo-caption">
+
+                    And many more memories to come... 🎀
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- FLOATING HEARTS -->
+
+        <span
+            class="gallery-heart"
+            style="left:10%;animation-delay:1s;">
+
+            ❤️
+
+        </span>
+
+
+        <span
+            class="gallery-heart"
+            style="left:25%;animation-delay:4s;">
+
+            🤍
+
+        </span>
+
+
+        <span
+            class="gallery-heart"
+            style="left:45%;animation-delay:2s;">
+
+            ❤️
+
+        </span>
+
+
+        <span
+            class="gallery-heart"
+            style="left:65%;animation-delay:5s;">
+
+            💕
+
+        </span>
+
+
+        <span
+            class="gallery-heart"
+            style="left:85%;animation-delay:3s;">
+
+            ❤️
+
+        </span>
+
+
+        <!-- GALLERY CONTROLS -->
+
+        <div class="gallery-controls">
+
+
+            <button
+                class="gallery-button"
+                onclick="previousPhoto()">
+
+                ‹
+
+            </button>
+
+
+            <div
+                id="photoCounter"
+                class="photo-counter">
+
+                01 / 06
+
+            </div>
+
+
+            <button
+                class="gallery-button"
+                onclick="nextPhoto()">
+
+                ›
+
+            </button>
+
+
+        </div>
+
+
+        <div class="vignette"></div>
+
+    </section>
+
+
+    <!-- =====================================================
+         SCENE 6 — FINAL SURPRISE
+    ====================================================== -->
+
+    <section
+        id="scene6"
+        class="scene final-scene">
+
+
+        <div class="final-background"></div>
+
+
+        <!-- FLOATING HEARTS -->
+
+        <div class="final-hearts">
+
+            <span
+                style="left:10%;animation-delay:0s;">
+                ❤️
+            </span>
+
+            <span
+                style="left:20%;animation-delay:2s;">
+                💕
+            </span>
+
+            <span
+                style="left:35%;animation-delay:4s;">
+                🤍
+            </span>
+
+            <span
+                style="left:50%;animation-delay:1s;">
+                ❤️
+            </span>
+
+            <span
+                style="left:65%;animation-delay:3s;">
+                💕
+            </span>
+
+            <span
+                style="left:80%;animation-delay:5s;">
+                🤍
+            </span>
+
+            <span
+                style="left:90%;animation-delay:2.5s;">
+                ❤️
+            </span>
+
+        </div>
+
+
+        <!-- FIREWORK 1 -->
+
+        <div
+            class="firework firework-one">
+
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+
+        </div>
+
+
+        <!-- FIREWORK 2 -->
+
+        <div
+            class="firework firework-two">
+
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+
+        </div>
+
+
+        <!-- FIREWORK 3 -->
+
+        <div
+            class="firework firework-three">
+
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+
+        </div>
+
+
+        <!-- FINAL CONTENT -->
+
+        <div class="final-content">
+
+
+            <div class="final-rakhi">
+
+                🎀
+
+            </div>
+
+
+            <div class="final-small">
+
+                ONE LAST THING...
+
+            </div>
+
+
+            <h1 class="final-title">
+
+                No Matter How Much We Grow...
+
+            </h1>
+
+
+            <p class="final-message">
+
+                You'll always be my little sister. ❤️
+
+            </p>
+
+
+            <div class="final-line"></div>
+
+
+            <p class="final-wish">
+
+                Happy Raksha Bandhan
+
+            </p>
+
+
+            <p class="final-sister">
+
+                To the most special sister ever. 💕
+
+            </p>
+
+
+            <p class="final-signature">
+
+                — Your Brother ❤️
+
+            </p>
+
+
+            <button
+                class="replay-button"
+                onclick="replayExperience()">
+
+                EXPERIENCE IT AGAIN ✨
+
+            </button>
+
+
+        </div>
+
+
+        <div class="vignette"></div>
+
+    </section>
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
+    <script>
+
+
+        /* =====================================================
+           MUSIC
+        ===================================================== */
+
+        const bgMusic =
+            document.getElementById(
+                "bgMusic"
+            );
+
+        const musicButton =
+            document.getElementById(
+                "musicButton"
+            );
+
+        const musicStatus =
+            document.getElementById(
+                "musicStatus"
+            );
+
+        const volumeSlider =
+            document.getElementById(
+                "volumeSlider"
+            );
+
+
+        bgMusic.volume = 0.5;
+
+
+        /* =====================================================
+           START MUSIC
+        ===================================================== */
+
+        function startMusic() {
+
+            bgMusic.volume =
+                volumeSlider.value;
+
+
+            bgMusic.play()
+
+                .then(() => {
+
+                    musicButton.textContent =
+                        "🎶";
+
+                    musicStatus.textContent =
+                        "Music On";
+
+                    musicButton.classList.add(
+                        "music-playing"
+                    );
+
+                })
+
+                .catch(() => {
+
+                    console.log(
+                        "Music could not start."
+                    );
+
+                });
+
+        }
+
+
+        /* =====================================================
+           TOGGLE MUSIC
+        ===================================================== */
+
+        function toggleMusic() {
+
+            if (
+                bgMusic.paused
+            ) {
+
+                bgMusic.play()
+
+                    .then(() => {
+
+                        musicButton.textContent =
+                            "🎶";
+
+                        musicStatus.textContent =
+                            "Music On";
+
+                        musicButton.classList.add(
+                            "music-playing"
+                        );
+
+                    });
+
+            }
+
+            else {
+
+                bgMusic.pause();
+
+                musicButton.textContent =
+                    "🎵";
+
+                musicStatus.textContent =
+                    "Music Off";
+
+                musicButton.classList.remove(
+                    "music-playing"
+                );
+
+            }
+
+        }
+
+
+        /* =====================================================
+           VOLUME
+        ===================================================== */
+
+        function changeVolume(value) {
+
+            bgMusic.volume =
+                value;
+
+        }
+
+
+        /* =====================================================
+           SCENE 1 → SCENE 2
+        ===================================================== */
+
+        function showRakhi() {
+
+            startMusic();
+
+            document
+                .getElementById("scene1")
+                .classList
+                .remove("active");
+
+
+            setTimeout(() => {
+
+                document
+                    .getElementById("scene2")
+                    .classList
+                    .add("active");
+
+            }, 700);
+
+        }
+
+
+        /* =====================================================
+           SCENE 2 → SCENE 3
+        ===================================================== */
+
+        function nextScene() {
+
+            document
+                .getElementById("scene2")
+                .classList
+                .remove("active");
+
+
+            setTimeout(() => {
+
+                document
+                    .getElementById("scene3")
+                    .classList
+                    .add("active");
+
+            }, 700);
+
+        }
+
+
+        /* =====================================================
+           SCENE 3 → SCENE 4
+        ===================================================== */
+
+        function showLetter() {
+
+            document
+                .getElementById("scene3")
+                .classList
+                .remove("active");
+
+
+            setTimeout(() => {
+
+                document
+                    .getElementById("scene4")
+                    .classList
+                    .add("active");
+
+            }, 700);
+
+        }
+
+
+        /* =====================================================
+           OPEN LETTER
+        ===================================================== */
+
+        function openLetter() {
+
+            const envelope =
+                document.getElementById(
+                    "envelopeArea"
+                );
+
+            const paper =
+                document.getElementById(
+                    "letterPaper"
+                );
+
+
+            if (
+                envelope.classList.contains(
+                    "open"
+                )
+            ) {
+
+                return;
+
+            }
+
+
+            envelope.classList.add(
+                "open"
+            );
+
+
+            setTimeout(() => {
+
+                paper.classList.add(
+                    "show"
+                );
+
+            }, 900);
+
+
+            setTimeout(() => {
+
+                typeLetter();
+
+            }, 2200);
+
+        }
+
+
+        /* =====================================================
+           TYPEWRITER LETTER
+        ===================================================== */
+
+        function typeLetter() {
+
+            const message =
+                document.getElementById(
+                    "letterMessage"
+                );
+
+            const signature =
+                document.getElementById(
+                    "letterSignature"
+                );
+
+            const continueButton =
+                document.getElementById(
+                    "letterContinue"
+                );
+
+
+            const text = [
+
+                "Dear Sis, ❤️",
+
+                "On this Raksha Bandhan, I just want you to know how grateful I am to have you in my life.",
+
+                "You are not just my sister. You are someone who makes ordinary moments special, someone I can laugh with, argue with, annoy, and still care about more than I can ever explain.",
+
+                "No matter where life takes us or how much we grow, one thing will never change — you will always have a special place in my heart.",
+
+                "I may not say it every day, but I will always wish the very best for you, support you, and be there whenever you need me.",
+
+                "Happy Raksha Bandhan, Sis. 🎀❤️"
+
+            ];
+
+
+            let paragraphIndex = 0;
+
+
+            message.innerHTML = "";
+
+            signature.innerHTML = "";
+
+            continueButton.style.display =
+                "none";
+
+
+            function showParagraph() {
+
+                if (
+                    paragraphIndex >=
+                    text.length
+                ) {
+
+                    signature.innerHTML =
+                        "With lots of love,<br>Your Brother ❤️";
+
+                    continueButton.style.display =
+                        "inline-block";
+
+                    return;
+
+                }
+
+
+                const paragraph =
+                    document.createElement(
+                        "p"
+                    );
+
+
+                message.appendChild(
+                    paragraph
+                );
+
+
+                const currentText =
+                    text[
+                        paragraphIndex
+                    ];
+
+
+                let characterIndex = 0;
+
+
+                const typing =
+                    setInterval(() => {
+
+                        paragraph.textContent +=
+                            currentText[
+                                characterIndex
+                            ];
+
+                        characterIndex++;
+
+
+                        if (
+                            characterIndex >=
+                            currentText.length
+                        ) {
+
+                            clearInterval(
+                                typing
+                            );
+
+                            paragraphIndex++;
+
+
+                            setTimeout(
+                                showParagraph,
+                                400
+                            );
+
+                        }
+
+                    }, 20);
+
+            }
+
+
+            showParagraph();
+
+        }
+
+
+        /* =====================================================
+           LETTER → GALLERY
+        ===================================================== */
+
+        function continueFromLetter(event) {
+
+            event.stopPropagation();
+
+
+            document
+                .getElementById("scene4")
+                .classList
+                .remove("active");
+
+
+            setTimeout(() => {
+
+                document
+                    .getElementById("scene5")
+                    .classList
+                    .add("active");
+
+
+                startGallery();
+
+            }, 700);
+
+        }
+
+
+        /* =====================================================
+           MEMORY GALLERY
+        ===================================================== */
+
+        let currentPhoto = 0;
+
+        let galleryTimer;
+
+
+        const photos =
+            document.querySelectorAll(
+                ".memory-card"
+            );
+
+
+        function showPhoto(index) {
+
+            photos[
+                currentPhoto
+            ].classList.remove(
+                "active"
+            );
+
+
+            currentPhoto =
+                index;
+
+
+            photos[
+                currentPhoto
+            ].classList.add(
+                "active"
+            );
+
+
+            document
+                .getElementById(
+                    "photoCounter"
+                )
+                .textContent =
+
+                String(
+                    currentPhoto + 1
+                ).padStart(
+                    2,
+                    "0"
+                )
+
+                + " / "
+
+                +
+
+                String(
+                    photos.length
+                ).padStart(
+                    2,
+                    "0"
+                );
+
+        }
+
+
+        /* =====================================================
+           NEXT PHOTO
+        ===================================================== */
+
+        function nextPhoto() {
+
+            let next =
+                currentPhoto + 1;
+
+
+            /*
+               If this was the final photo,
+               go to the Final Surprise.
+            */
+
+            if (
+                next >=
+                photos.length
+            ) {
+
+                clearInterval(
+                    galleryTimer
+                );
+
+
+                showFinalSurprise();
+                return;
+            }
+            showPhoto(next);
+            restartGallery();
+        }
+        function previousPhoto() {
+            let previous =
+                currentPhoto - 1;
+            if (
+                previous < 0
+            ) {
+                previous =
+                    photos.length - 1;
+            }
+        showPhoto(previous);
+            restartGallery();
+        }
+        function startGallery() {
+            clearInterval(
+                galleryTimer
+            );
+            galleryTimer =
+                setInterval(() => {
+                    let next =
+                        currentPhoto + 1;
+                    if (
+                        next >=
+                        photos.length
+                    ) {
+                        clearInterval(
+                            galleryTimer
+                        );
+                        showFinalSurprise();
+                        return;
+                    }
+                    showPhoto(next);
+                }, 6000);
+        }
+        function restartGallery() {
+
+            startGallery();
+        }
+        function showFinalSurprise() {
+            clearInterval(
+                galleryTimer
+            );
+            document
+                .getElementById("scene5")
+                .classList
+                .remove("active");
+            setTimeout(() => {
+                document
+                    .getElementById("scene6")
+                    .classList
+                    .add("active");
+            }, 1000);
+        }
+        function replayExperience() {
+            clearInterval(
+                galleryTimer
+            );
+            document
+                .querySelectorAll(".scene")
+                .forEach(scene => {
+
+                    scene.classList.remove(
+                        "active"
+                    );
+
+                });
+            currentPhoto = 0;
+            photos.forEach(photo => {
+                photo.classList.remove(
+                    "active"
+                );
+            });
+
+            photos[0].classList.add(
+                "active"
+            );
+
+            document
+                .getElementById(
+                    "photoCounter"
+                )
+                .textContent =
+                "01 / 06";
+            document
+                .getElementById(
+                    "letterPaper"
+                )
+                .classList
+                .remove("show");
+            document
+                .getElementById(
+                    "envelopeArea"
+                )
+                .classList
+                .remove("open");
+            document
+                .getElementById(
+                    "letterMessage"
+                )
+                .innerHTML = "";
+            document
+                .getElementById(
+                    "letterSignature"
+                )
+                .innerHTML = "";
+            document
+                .getElementById(
+                    "letterContinue"
+                )
+                .style.display =
+                "none";
+            setTimeout(() => {
+                document
+                    .getElementById("scene1")
+                    .classList
+                    .add("active");
+                startMusic();
+            }, 800);
+        }
+    </script>
+</body>
+</html>
